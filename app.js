@@ -198,7 +198,8 @@ function initCleaningSchedule() {
     const mondayDate = getMondayDate(today);
 
     const weekDiff = Math.max(0, getWeekDifference(mondayDate, REFERENCE_DATE));
-    const cycleIndex = weekDiff % 4;
+    const mondayWednesdayCycleIndex = weekDiff % 4;
+    const fridayCycleIndex = weekDiff % 5;
 
     const wednesdayDate = new Date(mondayDate);
     wednesdayDate.setDate(mondayDate.getDate() + 2);
@@ -213,21 +214,21 @@ function initCleaningSchedule() {
     const mondayColumn = createScheduleColumn(
         "monday",
         "Segunda-feira",
-        scheduleData.monday[cycleIndex],
+        scheduleData.monday[mondayWednesdayCycleIndex],
         mondayDate
     );
 
     const wednesdayColumn = createScheduleColumn(
         "wednesday",
         "Quarta-feira",
-        scheduleData.wednesday[cycleIndex],
+        scheduleData.wednesday[mondayWednesdayCycleIndex],
         wednesdayDate
     );
 
     const fridayColumn = createScheduleColumn(
         "friday",
         "Sexta-feira",
-        scheduleData.friday[cycleIndex],
+        scheduleData.friday[fridayCycleIndex],
         fridayDate
     );
 
