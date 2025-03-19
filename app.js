@@ -297,11 +297,40 @@ function initThemeManager() {
 }
 
 /**
+ * Destaca o dia atual na tabela da máquina de lavar
+ */
+function highlightCurrentWashingDay() {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+
+    const washingTable = document.querySelector('.washing-schedule table');
+    if (!washingTable) return;
+
+    // Get all rows in the table body
+    const rows = washingTable.querySelectorAll('tbody tr');
+
+    // Map JavaScript day index (0-6) to table row index (0-6)
+    // In our table: 0 = Monday, 1 = Tuesday, ..., 6 = Sunday
+    let rowIndex;
+    if (dayOfWeek === 0) {
+        rowIndex = 6; // Sunday is the last row
+    } else {
+        rowIndex = dayOfWeek - 1; // Adjust for other days
+    }
+
+    // Add the highlight class to the corresponding row
+    if (rowIndex >= 0 && rowIndex < rows.length) {
+        rows[rowIndex].classList.add('current-day');
+    }
+}
+
+/**
  * Inicializa a aplicação quando o DOM está pronto
  */
 document.addEventListener('DOMContentLoaded', () => {
     initCleaningSchedule();
     initThemeManager();
+    highlightCurrentWashingDay();
 });
 
 // Habilitar registro de erros
