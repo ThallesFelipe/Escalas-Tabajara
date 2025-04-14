@@ -160,25 +160,33 @@ main {
     border: none;
     font-size: var(--font-size-md);
     cursor: pointer;
-    padding: var(--spacing-xs);
-    /* Reduzir padding */
-    border-radius: 50%;
+    /* Definir width e height iguais para formar um quadrado */
+    width: 40px; /* Ajuste o tamanho conforme necessário */
+    height: 40px; /* Ajuste o tamanho conforme necessário */
+    padding: 0; /* Remover padding para não afetar o tamanho */
+    border-radius: 50%; /* Garante a forma circular */
     transition: background-color var(--transition-speed), transform var(--transition-speed);
     z-index: 100;
-    line-height: 1;
-    /* Evitar altura extra */
+    /* Usar flexbox para centralizar o ícone interno */
     display: flex;
-    /* Para centralizar o ícone */
     align-items: center;
     justify-content: center;
+    /* line-height: 1;  Removido, flexbox cuida do alinhamento */
+}
+
+.theme-toggle .theme-icon {
+    /* Garante que o ícone não tenha altura/largura extra */
+    line-height: 1;
+    display: block; /* Pode ajudar em alguns casos */
 }
 
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
     /* Combinar hover e focus */
-    background-color: var(--color-hover);
+    background-color: var(--color-hover); /* Mantém o destaque de fundo */
+    /* Combina a translação vertical original com a escala para evitar o salto de posição */
+    /* Isso garante que o botão expanda a partir do seu centro já posicionado */
     transform: translateY(-50%) scale(1.1);
-    /* Efeito de escala no hover/focus */
 }
 
 .theme-toggle:focus {
@@ -338,8 +346,7 @@ main {
 .washing-schedule th,
 .washing-schedule td {
     padding: var(--spacing-sm) var(--spacing-md);
-    text-align: left;
-    /* Alinhar texto à esquerda */
+    text-align: left; /* Garante alinhamento à esquerda para todos */
     border-bottom: 1px solid var(--color-border);
     transition: background-color var(--transition-speed);
 }
@@ -351,12 +358,22 @@ main {
     /* Borda mais grossa no header */
     color: var(--color-primary);
     /* Destacar cabeçalho */
+    /* Remove border-top default if any browser adds it */
+    border-top: none;
+}
+
+/* Aplica o border-radius superior esquerdo ao primeiro th do thead */
+.washing-schedule thead th:first-child {
+    border-top-left-radius: var(--border-radius-md);
+}
+
+/* Aplica o border-radius superior direito ao último th do thead */
+.washing-schedule thead th:last-child {
+    border-top-right-radius: var(--border-radius-md);
 }
 
 .washing-schedule td:last-child {
-    /* Alinhar responsável à direita */
-    text-align: right;
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary); /* Mantém a cor secundária */
 }
 
 .washing-schedule tbody tr:last-child td {
@@ -437,6 +454,12 @@ main {
         transform: none;
         /* Remover transform */
         margin-top: var(--spacing-xs);
+        /* Manter o tamanho definido ou ajustar se necessário */
+        /* width: 36px; */ /* Exemplo de ajuste para mobile */
+        /* height: 36px; */ /* Exemplo de ajuste para mobile */
+        /* Garantir centralização no fluxo normal */
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .schedule-container {

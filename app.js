@@ -26,10 +26,10 @@ const scheduleData = {
         { cozinha: "Agregado ViihTube", banhBaixo: "Bixo Tchairô", banhSuite: "Pakita", sala: "Bixo Rita", lavabo: "Bixo Rita" }
     ],
     wednesday: [
-        { cozinha: "BBB", banhBaixo: "TPM", banhSuite: "Bixo TotalFlex", sala: "Bixo Junior", lavabo: "Bixo Junior" },
-        { cozinha: "Bixo Junior", banhBaixo: "BBB", banhSuite: "TPM", sala: "Bixo TotalFlex", lavabo: "Bixo TotalFlex" },
-        { cozinha: "Bixo TotalFlex", banhBaixo: "Bixo Junior", banhSuite: "BBB", sala: "TPM", lavabo: "TPM" },
-        { cozinha: "TPM", banhBaixo: "Bixo TotalFlex", banhSuite: "Bixo Junior", sala: "BBB", lavabo: "BBB" }
+        { cozinha: "BBB", banhBaixo: "TPM", banhSuite: "Bixo TotalFlex", sala: "Bixo Smigou", lavabo: "Bixo Smigou" },
+        { cozinha: "Bixo Smigou", banhBaixo: "BBB", banhSuite: "TPM", sala: "Bixo TotalFlex", lavabo: "Bixo TotalFlex" },
+        { cozinha: "Bixo TotalFlex", banhBaixo: "Bixo Smigou", banhSuite: "BBB", sala: "TPM", lavabo: "TPM" },
+        { cozinha: "TPM", banhBaixo: "Bixo TotalFlex", banhSuite: "Bixo Smigou", sala: "BBB", lavabo: "BBB" }
     ],
     friday: [
         { cozinha: "Leidi", banhBaixo: "Madre", banhSuite: "Espalha", sala: "Latam", lavabo: "Caldo" },
@@ -288,7 +288,7 @@ const highlightCurrentWashingDay = () => {
         }
 
         const today = new Date();
-        const dayOfWeek = today.getDay(); // 0 = Domingo, 1 = Segunda, etc.
+        const dayOfWeek = today.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
 
         const rows = DOM.washingTableBody.querySelectorAll('tr');
         if (rows.length !== 7) {
@@ -299,9 +299,9 @@ const highlightCurrentWashingDay = () => {
         // Remove destaque de qualquer linha que possa ter
         rows.forEach(row => row.classList.remove('current-day'));
 
-        // Mapeia o índice do dia da semana (0-6) para o índice da linha da tabela (0-6)
-        // Tabela HTML: 0=Seg, 1=Ter, ..., 6=Dom
-        const rowIndex = (dayOfWeek === 0) ? 6 : dayOfWeek - 1;
+        // Mapeia o índice do dia da semana (0-6) diretamente para o índice da linha da tabela (0-6)
+        // Nova Tabela HTML: 0=Dom, 1=Seg, ..., 6=Sáb
+        const rowIndex = dayOfWeek; // O índice agora corresponde diretamente
 
         // Adiciona a classe de destaque à linha correspondente, se existir
         if (rows[rowIndex]) {
