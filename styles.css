@@ -161,10 +161,14 @@ main {
     font-size: var(--font-size-md);
     cursor: pointer;
     /* Definir width e height iguais para formar um quadrado */
-    width: 40px; /* Ajuste o tamanho conforme necessário */
-    height: 40px; /* Ajuste o tamanho conforme necessário */
-    padding: 0; /* Remover padding para não afetar o tamanho */
-    border-radius: 50%; /* Garante a forma circular */
+    width: 40px;
+    /* Ajuste o tamanho conforme necessário */
+    height: 40px;
+    /* Ajuste o tamanho conforme necessário */
+    padding: 0;
+    /* Remover padding para não afetar o tamanho */
+    border-radius: 50%;
+    /* Garante a forma circular */
     transition: background-color var(--transition-speed), transform var(--transition-speed);
     z-index: 100;
     /* Usar flexbox para centralizar o ícone interno */
@@ -177,13 +181,15 @@ main {
 .theme-toggle .theme-icon {
     /* Garante que o ícone não tenha altura/largura extra */
     line-height: 1;
-    display: block; /* Pode ajudar em alguns casos */
+    display: block;
+    /* Pode ajudar em alguns casos */
 }
 
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
     /* Combinar hover e focus */
-    background-color: var(--color-hover); /* Mantém o destaque de fundo */
+    background-color: var(--color-hover);
+    /* Mantém o destaque de fundo */
     /* Combina a translação vertical original com a escala para evitar o salto de posição */
     /* Isso garante que o botão expanda a partir do seu centro já posicionado */
     transform: translateY(-50%) scale(1.1);
@@ -346,7 +352,8 @@ main {
 .washing-schedule th,
 .washing-schedule td {
     padding: var(--spacing-sm) var(--spacing-md);
-    text-align: left; /* Garante alinhamento à esquerda para todos */
+    text-align: left;
+    /* Garante alinhamento à esquerda para todos */
     border-bottom: 1px solid var(--color-border);
     transition: background-color var(--transition-speed);
 }
@@ -373,7 +380,8 @@ main {
 }
 
 .washing-schedule td:last-child {
-    color: var(--color-text-secondary); /* Mantém a cor secundária */
+    color: var(--color-text-secondary);
+    /* Mantém a cor secundária */
 }
 
 .washing-schedule tbody tr:last-child td {
@@ -455,8 +463,10 @@ main {
         /* Remover transform */
         margin-top: var(--spacing-xs);
         /* Manter o tamanho definido ou ajustar se necessário */
-        /* width: 36px; */ /* Exemplo de ajuste para mobile */
-        /* height: 36px; */ /* Exemplo de ajuste para mobile */
+        /* width: 36px; */
+        /* Exemplo de ajuste para mobile */
+        /* height: 36px; */
+        /* Exemplo de ajuste para mobile */
         /* Garantir centralização no fluxo normal */
         margin-left: auto;
         margin-right: auto;
