@@ -11,7 +11,6 @@ html {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
-    /* Adiciona rolagem suave */
 }
 
 img,
@@ -53,23 +52,19 @@ h6 {
     --color-hover: #ffe0e0;
     --color-even-row: #fff8f8;
     --color-highlight-bg: rgba(255, 107, 107, 0.1);
-    /* Cor de fundo para destaque */
-    --border-radius-sm: 4px;
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    --spacing-xs: 5px;
-    --spacing-sm: 10px;
-    --spacing-md: 15px;
-    --spacing-lg: 20px;
-    --spacing-xl: 30px;
+    --border-radius-sm: 0.25rem;
+    --border-radius-md: 0.5rem;
+    --border-radius-lg: 0.75rem;
+    --spacing-xs: 0.3125rem;
+    --spacing-sm: 0.625rem;
+    --spacing-md: 0.9375rem;
+    --spacing-lg: 1.25rem;
+    --spacing-xl: 1.875rem;
     --font-size-xs: 0.9rem;
     --font-size-sm: 1rem;
     --font-size-md: 1.5rem;
-    /* Ajustado para consistência */
     --font-size-lg: 1.8rem;
-    /* Ajustado para hierarquia */
     --transition-speed: 0.2s;
-    /* Levemente mais rápido */
 }
 
 /* --- Dark mode variables --- */
@@ -90,20 +85,17 @@ h6 {
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--color-background);
-    /* Use background-color */
     color: var(--color-text);
     padding: var(--spacing-lg);
     line-height: 1.6;
     transition: background-color var(--transition-speed), color var(--transition-speed);
     min-height: 100vh;
-    /* Garante que o body ocupe a altura toda */
     display: flex;
     flex-direction: column;
 }
 
 main {
     flex-grow: 1;
-    /* Faz o main ocupar o espaço disponível */
 }
 
 .sr-only {
@@ -123,35 +115,25 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* Espaçar título e botão */
     padding: var(--spacing-md) var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
-    /* Aumentar margem inferior */
     background-color: var(--color-card);
-    /* Usar cor do card para destaque */
     transition: background-color var(--transition-speed);
     box-shadow: 0 2px 6px var(--color-shadow);
-    /* Sombra mais suave */
     border-radius: var(--border-radius-md);
     position: relative;
-    /* Para posicionamento absoluto do botão se necessário */
 }
 
 .page-header h1 {
     font-size: var(--font-size-lg);
-    /* Usar variável */
     margin: 0;
-    /* Remover margem padrão */
     text-align: center;
     flex-grow: 1;
-    /* Permitir que o título cresça */
-    padding-right: 50px;
-    /* Espaço para o botão não sobrepor */
+    padding-right: 3.125rem;
 }
 
 /* --- Theme Toggle Button --- */
 .theme-toggle {
-    /* Posicionado à direita do header */
     position: absolute;
     top: 50%;
     right: var(--spacing-lg);
@@ -160,49 +142,34 @@ main {
     border: none;
     font-size: var(--font-size-md);
     cursor: pointer;
-    /* Definir width e height iguais para formar um quadrado */
-    width: 40px;
-    /* Ajuste o tamanho conforme necessário */
-    height: 40px;
-    /* Ajuste o tamanho conforme necessário */
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0;
-    /* Remover padding para não afetar o tamanho */
     border-radius: 50%;
-    /* Garante a forma circular */
     transition: background-color var(--transition-speed), transform var(--transition-speed);
     z-index: 100;
-    /* Usar flexbox para centralizar o ícone interno */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* line-height: 1;  Removido, flexbox cuida do alinhamento */
 }
 
 .theme-toggle .theme-icon {
-    /* Garante que o ícone não tenha altura/largura extra */
     line-height: 1;
     display: block;
-    /* Pode ajudar em alguns casos */
 }
 
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
-    /* Combinar hover e focus */
     background-color: var(--color-hover);
-    /* Mantém o destaque de fundo */
-    /* Combina a translação vertical original com a escala para evitar o salto de posição */
-    /* Isso garante que o botão expanda a partir do seu centro já posicionado */
     transform: translateY(-50%) scale(1.1);
 }
 
 .theme-toggle:focus {
     outline: none;
-    /* Remover outline padrão */
 }
 
 .theme-toggle:focus-visible {
     box-shadow: 0 0 0 2px var(--color-primary);
-    /* Outline customizado */
 }
 
 /* --- Cleaning Schedule Section --- */
@@ -222,12 +189,9 @@ main {
     background: var(--color-card);
     border-radius: var(--border-radius-md);
     box-shadow: 0 3px 8px var(--color-shadow);
-    /* Sombra mais pronunciada */
     padding: var(--spacing-md);
-    flex: 1 1 300px;
-    /* Permitir encolher e crescer, base 300px */
-    min-width: 280px;
-    /* Largura mínima */
+    flex: 1 1 18.75rem;
+    min-width: 17.5rem;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
@@ -235,25 +199,19 @@ main {
     border: 2px solid var(--color-primary);
     transform: scale(1.02);
     box-shadow: 0 4px 12px var(--color-shadow);
-    /* Sombra maior no dia atual */
 }
 
 .column header {
     border-bottom: 1px solid var(--color-border);
     margin-bottom: var(--spacing-md);
-    /* Aumentar espaço */
     padding-bottom: var(--spacing-sm);
-    /* Aumentar espaço */
     text-align: center;
 }
 
 .column header h3 {
-    /* Usar H3 como no HTML refatorado */
     font-size: 1.3rem;
-    /* Tamanho intermediário */
     margin-bottom: var(--spacing-xs);
     color: var(--color-primary);
-    /* Destacar título da coluna */
 }
 
 .column header span {
@@ -267,27 +225,21 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* Alinhar verticalmente */
     padding: var(--spacing-sm);
-    /* Aumentar padding */
     background: var(--color-room-bg);
     border-radius: var(--border-radius-sm);
     transition: background-color var(--transition-speed);
     border-left: 3px solid transparent;
-    /* Espaço para borda no hover */
 }
 
 .room:hover {
     background-color: var(--color-hover);
     border-left-color: var(--color-primary);
-    /* Borda no hover */
 }
 
 .room span.room-name {
     font-weight: 500;
-    /* Peso médio */
     margin-right: var(--spacing-sm);
-    /* Espaço entre nome e responsável */
 }
 
 .room span.responsible {
@@ -303,9 +255,7 @@ main {
     border-radius: var(--border-radius-lg);
     box-shadow: 0 4px 12px var(--color-shadow);
     padding: var(--spacing-lg);
-    /* Ajustar padding */
-    max-width: 700px;
-    /* Aumentar largura máxima */
+    max-width: 43.75rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -315,36 +265,28 @@ main {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-lg);
     color: var(--color-primary);
-    /* Destacar título */
 }
 
 /* --- Table Container (for responsiveness) --- */
 .table-container {
     overflow-x: auto;
-    /* Habilitar rolagem horizontal em telas pequenas */
     margin-top: var(--spacing-md);
 }
 
 .washing-schedule table {
     width: 100%;
-    min-width: 450px;
-    /* Evitar quebra excessiva */
+    min-width: 20rem;
     border-collapse: separate;
-    /* Usar separate para border-radius */
     border-spacing: 0;
     border: 1px solid var(--color-border);
-    /* Borda na tabela */
     border-radius: var(--border-radius-md);
     overflow: hidden;
-    /* Para border-radius funcionar */
 }
 
 .washing-schedule caption {
     font-weight: 600;
-    /* Deixar legenda em negrito */
     margin-bottom: var(--spacing-md);
     text-align: center;
-    /* Centralizar legenda */
     color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
 }
@@ -353,7 +295,6 @@ main {
 .washing-schedule td {
     padding: var(--spacing-sm) var(--spacing-md);
     text-align: left;
-    /* Garante alinhamento à esquerda para todos */
     border-bottom: 1px solid var(--color-border);
     transition: background-color var(--transition-speed);
 }
@@ -362,139 +303,116 @@ main {
     background-color: var(--color-room-bg);
     font-weight: 600;
     border-bottom-width: 2px;
-    /* Borda mais grossa no header */
     color: var(--color-primary);
-    /* Destacar cabeçalho */
-    /* Remove border-top default if any browser adds it */
     border-top: none;
 }
 
-/* Aplica o border-radius superior esquerdo ao primeiro th do thead */
 .washing-schedule thead th:first-child {
     border-top-left-radius: var(--border-radius-md);
 }
 
-/* Aplica o border-radius superior direito ao último th do thead */
 .washing-schedule thead th:last-child {
     border-top-right-radius: var(--border-radius-md);
 }
 
 .washing-schedule td:last-child {
     color: var(--color-text-secondary);
-    /* Mantém a cor secundária */
 }
 
 .washing-schedule tbody tr:last-child td {
     border-bottom: none;
-    /* Remover borda inferior da última linha */
 }
 
 .washing-schedule tbody tr:nth-child(even) {
-    /* Aplicar ao TR */
     background-color: var(--color-even-row);
 }
 
 .washing-schedule tbody tr:hover {
-    /* Aplicar ao TR */
     background-color: var(--color-hover);
 }
 
 .washing-schedule tbody tr.current-day {
     background-color: var(--color-highlight-bg) !important;
-    /* Usar variável de destaque */
     font-weight: 600;
-    /* Usar peso em vez de bold */
 }
 
 .washing-schedule tbody tr.current-day td {
     color: var(--color-text);
-    /* Garantir cor do texto no dia atual */
 }
 
 .washing-schedule tbody tr.current-day td:first-child {
     border-left: 3px solid var(--color-primary);
-    /* Mover borda para a célula */
     font-weight: 700;
-    /* Deixar o dia mais destacado */
 }
 
 /* --- Page Footer --- */
 .page-footer {
     text-align: center;
-    font-size: 0.85rem;
-    /* Aumentar um pouco */
+    font-size: 0.95rem;
     color: var(--color-text-secondary);
     margin-top: var(--spacing-xl);
     padding-top: var(--spacing-lg);
-    /* Espaço acima */
     border-top: 1px solid var(--color-border);
-    /* Linha separadora */
-    opacity: 0.8;
-    /* Leve transparência */
+    opacity: 0.85;
 }
 
 /* --- Responsive Styles --- */
-@media (max-width: 768px) {
-    body {
-        padding: var(--spacing-md);
-        /* Reduzir padding geral */
-    }
-
-    .page-header {
-        flex-direction: column;
-        padding: var(--spacing-md);
-        gap: var(--spacing-sm);
-        /* Espaço entre título e botão */
-        justify-content: center;
-        /* Centralizar na coluna */
-    }
-
-    .page-header h1 {
-        font-size: 1.3rem;
-        /* Reduzir título */
-        padding-right: 0;
-        /* Remover padding extra */
-    }
-
-    .theme-toggle {
-        position: static;
-        /* Remover posicionamento absoluto */
-        transform: none;
-        /* Remover transform */
-        margin-top: var(--spacing-xs);
-        /* Manter o tamanho definido ou ajustar se necessário */
-        /* width: 36px; */
-        /* Exemplo de ajuste para mobile */
-        /* height: 36px; */
-        /* Exemplo de ajuste para mobile */
-        /* Garantir centralização no fluxo normal */
-        margin-left: auto;
-        margin-right: auto;
-    }
-
+@media (max-width: 900px) {
     .schedule-container {
         flex-direction: column;
         gap: var(--spacing-md);
     }
-
     .column {
-        flex-basis: auto;
-        /* Resetar flex-basis */
+        min-width: 12.5rem;
+        padding: var(--spacing-sm);
     }
-
     .washing-schedule {
         padding: var(--spacing-md);
     }
+}
 
+@media (max-width: 600px) {
+    body {
+        padding: var(--spacing-sm);
+    }
+    .page-header {
+        flex-direction: column;
+        padding: var(--spacing-sm);
+        gap: var(--spacing-xs);
+        justify-content: center;
+    }
+    .page-header h1 {
+        font-size: 1.1rem;
+        padding-right: 0;
+    }
+    .theme-toggle {
+        position: static;
+        transform: none;
+        margin-top: var(--spacing-xs);
+        margin-left: auto;
+        margin-right: auto;
+    }
     .washing-schedule h2 {
         font-size: var(--font-size-md);
-        /* Reduzir título */
     }
-
     .washing-schedule th,
     .washing-schedule td {
-        padding: var(--spacing-sm);
-        /* Reduzir padding da tabela */
+        padding: var(--spacing-xs);
+    }
+    .washing-schedule table {
+        min-width: 16rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .washing-schedule table {
+        min-width: 12rem;
+        font-size: 0.85rem;
+    }
+    .column {
+        min-width: 8rem;
+        padding: var(--spacing-xs);
     }
 }
 
@@ -503,7 +421,6 @@ main {
     html {
         scroll-behavior: auto;
     }
-
     *,
     *::before,
     *::after {

@@ -18,14 +18,13 @@
 <body>
     <header class="page-header">
         <h1>🧹 Escala de Limpeza - República Tabajara 🧹</h1>
-        <button class="theme-toggle" id="themeToggle" aria-label="Alternar modo claro/escuro" aria-live="polite">
-            <span class="theme-icon" id="themeIcon">☀️</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar para modo escuro">
+            <span class="theme-icon" id="themeIcon" aria-hidden="true">☀️</span>
         </button>
     </header>
 
     <main>
         <section class="cleaning-schedule-section" aria-labelledby="cleaning-title">
-            <h2 id="cleaning-title" class="sr-only">Escala de Limpeza Semanal</h2>
             <div class="schedule-container" id="cleaningSchedule">
                 <!-- Colunas de limpeza preenchidas via JavaScript -->
             </div>
@@ -43,7 +42,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Reordenado para começar no Domingo -->
                         <tr>
                             <td>Domingo</td>
                             <td>Espalha Lixo e B. Smigou</td>
@@ -82,7 +80,7 @@
         <p>&copy; <span id="currentYear"></span> - Desenvolvido por Espalha Lixo. 🚯</p>
     </footer>
 
-    <script src="app.js" type="module"></script>
+    <script src="app.js" type="module" defer></script>
 </body>
 
 </html>
