@@ -86,7 +86,7 @@ const getMondayDate = (date) => {
 const createScheduleColumn = (id, dayName, schedule, cleaningDate) => {
     const column = document.createElement('div');
     column.id = id;
-    column.className = 'column';
+    column.className = 'column glass'; // Adiciona glassmorphism
 
     const columnHeader = document.createElement('header');
     const title = document.createElement('h3');
