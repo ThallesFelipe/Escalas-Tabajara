@@ -17,23 +17,25 @@
 /** Dados da escala de limpeza. */
 const scheduleData = {
     monday: [
-        { cozinha: "Bixo Rita", banhBaixo: "Agregado ViihTube", banhSuite: "Bixo Tchairô", sala: "Pakita", lavabo: "Pakita" },
-        { cozinha: "Pakita", banhBaixo: "Bixo Rita", banhSuite: "Agregado ViihTube", sala: "Bixo Tchairô", lavabo: "Bixo Tchairô" },
-        { cozinha: "Bixo Tchairô", banhBaixo: "Pakita", banhSuite: "Bixo Rita", sala: "Agregado ViihTube", lavabo: "Agregado ViihTube" },
-        { cozinha: "Agregado ViihTube", banhBaixo: "Bixo Tchairô", banhSuite: "Pakita", sala: "Bixo Rita", lavabo: "Bixo Rita" }
+        { cozinha: "Bixo Tchairô", banhBaixo: "Bixo Marco", banhSuite: "Bixo BDM", sala: "A. Viihtube", lavabo: "I. Ivan" },
+        { cozinha: "I. Ivan", banhBaixo: "Bixo Tchairô", banhSuite: "Bixo Marco", sala: "Bixo BDM", lavabo: "A. Viihtube" },
+        { cozinha: "A. Viihtube", banhBaixo: "I. Ivan", banhSuite: "Bixo Tchairô", sala: "Bixo Marco", lavabo: "Bixo BDM" },
+        { cozinha: "Bixo BDM", banhBaixo: "A. Viihtube", banhSuite: "I. Ivan", sala: "Bixo Tchairô", lavabo: "Bixo Marco" },
+        { cozinha: "Bixo Marco", banhBaixo: "Bixo BDM", banhSuite: "A. Viihtube", sala: "I. Ivan", lavabo: "Bixo Tchairô" }
     ],
     wednesday: [
-        { cozinha: "BBB", banhBaixo: "TPM", banhSuite: "Bixo TotalFlex", sala: "Bixo Smigou", lavabo: "Bixo Smigou" },
-        { cozinha: "Bixo Smigou", banhBaixo: "BBB", banhSuite: "TPM", sala: "Bixo TotalFlex", lavabo: "Bixo TotalFlex" },
-        { cozinha: "Bixo TotalFlex", banhBaixo: "Bixo Smigou", banhSuite: "BBB", sala: "TPM", lavabo: "TPM" },
-        { cozinha: "TPM", banhBaixo: "Bixo TotalFlex", banhSuite: "Bixo Smigou", sala: "BBB", lavabo: "BBB" }
+        { cozinha: "LATAM", banhBaixo: "TPM", banhSuite: "Bixo TotalFlex", sala: "Bixo Smigou", lavabo: "Bixo Rita" },
+        { cozinha: "Bixo Rita", banhBaixo: "LATAM", banhSuite: "TPM", sala: "Bixo TotalFlex", lavabo: "Bixo Smigou" },
+        { cozinha: "Bixo Smigou", banhBaixo: "Bixo Rita", banhSuite: "LATAM", sala: "TPM", lavabo: "Bixo TotalFlex" },
+        { cozinha: "Bixo TotalFlex", banhBaixo: "Bixo Smigou", banhSuite: "Bixo Rita", sala: "LATAM", lavabo: "TPM" },
+        { cozinha: "TPM", banhBaixo: "Bixo TotalFlex", banhSuite: "Bixo Smigou", sala: "Bixo Rita", lavabo: "LATAM" }
     ],
     friday: [
-        { cozinha: "Leidi", banhBaixo: "Madre", banhSuite: "Espalha", sala: "Latam", lavabo: "Caldo" },
-        { cozinha: "Caldo", banhBaixo: "Leidi", banhSuite: "Madre", sala: "Espalha", lavabo: "Latam" },
-        { cozinha: "Latam", banhBaixo: "Caldo", banhSuite: "Leidi", sala: "Madre", lavabo: "Espalha" },
-        { cozinha: "Espalha", banhBaixo: "Latam", banhSuite: "Caldo", sala: "Leidi", lavabo: "Madre" },
-        { cozinha: "Madre", banhBaixo: "Espalha", banhSuite: "Latam", sala: "Caldo", lavabo: "Leidi" }
+        { cozinha: "BBB", banhBaixo: "Leidi", banhSuite: "Madre", sala: "Espalha", lavabo: "Navala" },
+        { cozinha: "Navala", banhBaixo: "BBB", banhSuite: "Leidi", sala: "Madre", lavabo: "Espalha" },
+        { cozinha: "Espalha", banhBaixo: "Navala", banhSuite: "BBB", sala: "Leidi", lavabo: "Madre" },
+        { cozinha: "Madre", banhBaixo: "Espalha", banhSuite: "Navala", sala: "BBB", lavabo: "Leidi" },
+        { cozinha: "Leidi", banhBaixo: "Madre", banhSuite: "Espalha", sala: "Navala", lavabo: "BBB" }
     ]
 };
 
