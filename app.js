@@ -17,11 +17,11 @@
 /** Dados da escala de limpeza. */
 const scheduleData = {
     monday: [
-        { cozinha: "Bixo Tchairô", banhBaixo: "Bixo Marco", banhSuite: "Bixo BDM", sala: "A. Viihtube", lavabo: "I. Ivan" },
-        { cozinha: "I. Ivan", banhBaixo: "Bixo Tchairô", banhSuite: "Bixo Marco", sala: "Bixo BDM", lavabo: "A. Viihtube" },
-        { cozinha: "A. Viihtube", banhBaixo: "I. Ivan", banhSuite: "Bixo Tchairô", sala: "Bixo Marco", lavabo: "Bixo BDM" },
-        { cozinha: "Bixo BDM", banhBaixo: "A. Viihtube", banhSuite: "I. Ivan", sala: "Bixo Tchairô", lavabo: "Bixo Marco" },
-        { cozinha: "Bixo Marco", banhBaixo: "Bixo BDM", banhSuite: "A. Viihtube", sala: "I. Ivan", lavabo: "Bixo Tchairô" }
+        { cozinha: "Bixo Alexa", banhBaixo: "Bixo Gaga", banhSuite: "Bixo BDM", sala: "A. Viihtube", lavabo: "I. Ivan" },
+        { cozinha: "I. Ivan", banhBaixo: "Bixo Alexa", banhSuite: "Bixo Gaga", sala: "Bixo BDM", lavabo: "A. Viihtube" },
+        { cozinha: "A. Viihtube", banhBaixo: "I. Ivan", banhSuite: "Bixo Alexa", sala: "Bixo Gaga", lavabo: "Bixo BDM" },
+        { cozinha: "Bixo BDM", banhBaixo: "A. Viihtube", banhSuite: "I. Ivan", sala: "Bixo Alexa", lavabo: "Bixo Gaga" },
+        { cozinha: "Bixo Gaga", banhBaixo: "Bixo BDM", banhSuite: "A. Viihtube", sala: "I. Ivan", lavabo: "Bixo Alexa" }
     ],
     wednesday: [
         { cozinha: "LATAM", banhBaixo: "TPM", banhSuite: "Bixo TotalFlex", sala: "Bixo Smigou", lavabo: "Bixo Rita" },
@@ -124,7 +124,11 @@ const initCleaningSchedule = () => {
     if (!DOM.scheduleContainer) return;
 
     const today = new Date();
-    const mondayDate = getMondayDate(today);
+    let referenceDate = new Date(today);
+    if (today.getDay() === 0) {
+        referenceDate.setDate(today.getDate() + 1); // Segunda-feira seguinte
+    }
+    const mondayDate = getMondayDate(referenceDate);
 
     const weekDiff = Math.max(0, getWeekDifference(mondayDate, REFERENCE_DATE));
     const mondayCycleIndex = weekDiff % (scheduleData.monday?.length || 1);
