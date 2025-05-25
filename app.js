@@ -17,11 +17,10 @@
 /** Dados da escala de limpeza. */
 const scheduleData = {
     monday: [
-        { cozinha: "Bixo Alexa", banhBaixo: "Bixo Gaga", banhSuite: "Bixo BDM", sala: "A. Viihtube", lavabo: "I. Ivan" },
-        { cozinha: "I. Ivan", banhBaixo: "Bixo Alexa", banhSuite: "Bixo Gaga", sala: "Bixo BDM", lavabo: "A. Viihtube" },
-        { cozinha: "A. Viihtube", banhBaixo: "I. Ivan", banhSuite: "Bixo Alexa", sala: "Bixo Gaga", lavabo: "Bixo BDM" },
-        { cozinha: "Bixo BDM", banhBaixo: "A. Viihtube", banhSuite: "I. Ivan", sala: "Bixo Alexa", lavabo: "Bixo Gaga" },
-        { cozinha: "Bixo Gaga", banhBaixo: "Bixo BDM", banhSuite: "A. Viihtube", sala: "I. Ivan", lavabo: "Bixo Alexa" }
+        { cozinha: "Bixo Alexa", banhBaixo: "Bixo Gaga", banhSuite: "I. Ivan", sala: "A. Viihtube", lavabo: "A. Viihtube" },
+        { cozinha: "I. Ivan", banhBaixo: "Bixo Alexa", banhSuite: "Bixo Gaga", sala: "Bixo Alexa", lavabo: "Bixo Alexa" },
+        { cozinha: "A. Viihtube", banhBaixo: "I. Ivan", banhSuite: "Bixo Alexa", sala: "Bixo Gaga", lavabo: "Bixo Gaga" },
+        { cozinha: "Bixo Gaga", banhBaixo: "A. Viihtube", banhSuite: "I. Ivan", sala: "I. Ivan", lavabo: "I. Ivan" }
     ],
     wednesday: [
         { cozinha: "LATAM", banhBaixo: "TPM", banhSuite: "Bixo TotalFlex", sala: "Bixo Smigou", lavabo: "Bixo Rita" },
