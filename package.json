@@ -1,0 +1,44 @@
+{
+  "name": "escalas-tabajara",
+  "version": "2.0.0",
+  "description": "Sistema de escalas de limpeza e lavanderia da República Tabajara",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,ts,html --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,ts,html --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "schedule",
+    "cleaning",
+    "washing-machine",
+    "republic",
+    "university"
+  ],
+  "author": "Espalha Lixo",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/ui": "^1.0.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-html": "^7.1.0",
+    "jsdom": "^23.0.0",
+    "prettier": "^3.0.0",
+    "terser": "^5.41.0",
+    "typescript": "^5.0.2",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "dependencies": {
+    "date-fns": "^3.0.0"
+  }
+}
