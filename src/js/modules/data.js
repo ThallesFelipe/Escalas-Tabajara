@@ -8,33 +8,33 @@
  */
 export const scheduleData = {
   monday: [
-    { 
-      cozinha: 'Bixo Alexa', 
-      banhBaixo: 'Bixo Gaga', 
-      banhSuite: 'I. Ivan', 
-      sala: 'A. Viihtube', 
-      lavabo: 'A. Viihtube' 
+    {
+      cozinha: 'I. Ivan',
+      banhBaixo: 'A. Viihtube',
+      banhSuite: 'Bixo Gaga',
+      sala: 'Bixo Alexa',
+      lavabo: 'Bixo Alexa'
     },
-    { 
-      cozinha: 'I. Ivan', 
-      banhBaixo: 'Bixo Alexa', 
-      banhSuite: 'Bixo Gaga', 
-      sala: 'Bixo Alexa', 
-      lavabo: 'Bixo Alexa' 
+    {
+      cozinha: 'Bixo Alexa',
+      banhBaixo: 'I. Ivan',
+      banhSuite: 'A. Viihtube',
+      sala: 'Bixo Gaga',
+      lavabo: 'Bixo Gaga'
     },
-    { 
-      cozinha: 'Bixo Gaga', 
-      banhBaixo: 'A. Viihtube', 
-      banhSuite: 'B. Alexa', 
-      sala: 'I. Ivan', 
-      lavabo: 'I. Ivan' 
+    {
+      cozinha: 'Bixo Gaga',
+      banhBaixo: 'Bixo Alexa',
+      banhSuite: 'I. Ivan',
+      sala: 'A. Viihtube',
+      lavabo: 'A. Viihtube'
     },
-    { 
-      cozinha: 'A. Viihtube', 
-      banhBaixo: 'I. Ivan', 
-      banhSuite: 'Bixo Alexa', 
-      sala: 'Bixo Gaga', 
-      lavabo: 'Bixo Gaga' 
+    {
+      cozinha: 'A. Viihtube',
+      banhBaixo: 'Bixo Gaga',
+      banhSuite: 'Bixo Alexa',
+      sala: 'I. Ivan',
+      lavabo: 'I. Ivan'
     }
   ],
   wednesday: [

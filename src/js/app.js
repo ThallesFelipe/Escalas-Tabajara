@@ -4,7 +4,7 @@
 
 import { scheduleData, appConfig } from './modules/data.js';
 import { calculateWeekCycles } from './modules/dateUtils.js';
-import { DOMCache } from './modules/domUtils.js';
+import { DOMCache, DOMUtils } from './modules/domUtils.js';
 import { ThemeManager } from './modules/themeManager.js';
 import { ScheduleRenderer } from './modules/scheduleRenderer.js';
 import { WashingScheduleManager } from './modules/washingScheduleManager.js';
@@ -22,7 +22,7 @@ class EscalasTabajaraApp {
     this.initTime = Date.now();
     this.errorCount = 0;
     this.lastUpdate = null;
-    this.lastError = '';
+    this.lastError = null;
   }
 
   /**
@@ -58,9 +58,11 @@ class EscalasTabajaraApp {
       this.updateFooterYear();
 
       this.isInitialized = true;
-      console.log('✅ Sistema inicializado com sucesso!');    } catch (error) {
+      console.log('✅ Sistema inicializado com sucesso!');
+
+    } catch (error) {
       console.error('❌ Erro ao inicializar aplicação:', error);
-      this.handleInitializationError(error instanceof Error ? error : new Error(String(error)));
+      this.handleInitializationError(error);
     }
   }
 
@@ -75,9 +77,10 @@ class EscalasTabajaraApp {
       if (this.scheduleRenderer) {
         this.scheduleRenderer.renderSchedule(cycleData, scheduleData);
       }
-        } catch (error) {
+      
+    } catch (error) {
       console.error('Erro ao renderizar escala de limpeza:', error);
-      this.handleScheduleError(error instanceof Error ? error : new Error(String(error)));
+      this.handleScheduleError(error);
     }
   }
 
