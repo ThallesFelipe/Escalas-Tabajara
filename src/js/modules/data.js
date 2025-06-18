@@ -9,6 +9,13 @@
 export const scheduleData = {
   monday: [
     {
+      cozinha: 'A. Viihtube',
+      banhBaixo: 'Bixo Gaga',
+      banhSuite: 'Bixo Alexa',
+      sala: 'I. Ivan',
+      lavabo: 'I. Ivan'
+    },
+    {
       cozinha: 'I. Ivan',
       banhBaixo: 'A. Viihtube',
       banhSuite: 'Bixo Gaga',
@@ -29,13 +36,6 @@ export const scheduleData = {
       sala: 'A. Viihtube',
       lavabo: 'A. Viihtube'
     },
-    {
-      cozinha: 'A. Viihtube',
-      banhBaixo: 'Bixo Gaga',
-      banhSuite: 'Bixo Alexa',
-      sala: 'I. Ivan',
-      lavabo: 'I. Ivan'
-    }
   ],
   wednesday: [
     { 
