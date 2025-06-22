@@ -13,104 +13,97 @@ export const scheduleData = {
       banhBaixo: 'Bixo Gaga',
       banhSuite: 'Bixo Alexa',
       sala: 'I. Ivan',
-      lavabo: 'I. Ivan'
+      lavabo: 'I. Ivan',
     },
     {
       cozinha: 'I. Ivan',
       banhBaixo: 'A. Viihtube',
       banhSuite: 'Bixo Gaga',
       sala: 'Bixo Alexa',
-      lavabo: 'Bixo Alexa'
+      lavabo: 'Bixo Alexa',
     },
     {
       cozinha: 'Bixo Alexa',
       banhBaixo: 'I. Ivan',
       banhSuite: 'A. Viihtube',
       sala: 'Bixo Gaga',
-      lavabo: 'Bixo Gaga'
+      lavabo: 'Bixo Gaga',
     },
     {
       cozinha: 'Bixo Gaga',
       banhBaixo: 'Bixo Alexa',
       banhSuite: 'I. Ivan',
       sala: 'A. Viihtube',
-      lavabo: 'A. Viihtube'
+      lavabo: 'A. Viihtube',
     },
   ],
   wednesday: [
-    { 
-      cozinha: 'LATAM', 
-      banhBaixo: 'TPM', 
-      banhSuite: 'Bixo TotalFlex', 
-      sala: 'Bixo Smigou', 
-      lavabo: 'Bixo Rita' 
+    {
+      cozinha: 'Rita',
+      banhBaixo: 'LATAM',
+      banhSuite: 'TPM',
+      sala: 'Smigou',
+      lavabo: 'Smigou',
     },
     { 
-      cozinha: 'Bixo Rita', 
-      banhBaixo: 'LATAM', 
-      banhSuite: 'TPM', 
-      sala: 'Bixo TotalFlex', 
-      lavabo: 'Bixo Smigou' 
-    },
-    { 
-      cozinha: 'Bixo Smigou', 
-      banhBaixo: 'Bixo Rita', 
+      cozinha: 'Smigou', 
+      banhBaixo: 'Rita', 
       banhSuite: 'LATAM', 
       sala: 'TPM', 
-      lavabo: 'Bixo TotalFlex' 
-    },
-    { 
-      cozinha: 'Bixo TotalFlex', 
-      banhBaixo: 'Bixo Smigou', 
-      banhSuite: 'Bixo Rita', 
-      sala: 'LATAM', 
       lavabo: 'TPM' 
     },
-    { 
-      cozinha: 'TPM', 
-      banhBaixo: 'Bixo TotalFlex', 
-      banhSuite: 'Bixo Smigou', 
-      sala: 'Bixo Rita', 
-      lavabo: 'LATAM' 
-    }
+    {
+      cozinha: 'TPM',
+      banhBaixo: 'Smigou',
+      banhSuite: 'Rita',
+      sala: 'LATAM',
+      lavabo: 'LATAM',
+    },
+    {
+      cozinha: 'LATAM',
+      banhBaixo: 'TPM',
+      banhSuite: 'Smigou',
+      sala: 'Rita',
+      lavabo: 'Rita',
+    },
   ],
   friday: [
-    { 
-      cozinha: 'BBB', 
-      banhBaixo: 'Leidi', 
-      banhSuite: 'Madre', 
-      sala: 'Espalha', 
-      lavabo: 'Navala' 
+    {
+      cozinha: 'BBB',
+      banhBaixo: 'Leidi',
+      banhSuite: 'Madre',
+      sala: 'Espalha',
+      lavabo: 'Navala',
     },
-    { 
-      cozinha: 'Navala', 
-      banhBaixo: 'BBB', 
-      banhSuite: 'Leidi', 
-      sala: 'Madre', 
-      lavabo: 'Espalha' 
+    {
+      cozinha: 'Navala',
+      banhBaixo: 'BBB',
+      banhSuite: 'Leidi',
+      sala: 'Madre',
+      lavabo: 'Espalha',
     },
-    { 
-      cozinha: 'Espalha', 
-      banhBaixo: 'Navala', 
-      banhSuite: 'BBB', 
-      sala: 'Leidi', 
-      lavabo: 'Madre' 
+    {
+      cozinha: 'Espalha',
+      banhBaixo: 'Navala',
+      banhSuite: 'BBB',
+      sala: 'Leidi',
+      lavabo: 'Madre',
     },
-    { 
-      cozinha: 'Madre', 
-      banhBaixo: 'Espalha', 
-      banhSuite: 'Navala', 
-      sala: 'BBB', 
-      lavabo: 'Leidi' 
+    {
+      cozinha: 'Madre',
+      banhBaixo: 'Espalha',
+      banhSuite: 'Navala',
+      sala: 'BBB',
+      lavabo: 'Leidi',
     },
-    { 
-      cozinha: 'Leidi', 
-      banhBaixo: 'Madre', 
-      banhSuite: 'Espalha', 
-      sala: 'Navala', 
-      lavabo: 'BBB' 
-    }
-  ]
+    {
+      cozinha: 'Leidi',
+      banhBaixo: 'Madre',
+      banhSuite: 'Espalha',
+      sala: 'Navala',
+      lavabo: 'BBB',
+    },
+  ],
 };
 
 /**
@@ -121,7 +114,7 @@ export const rooms = [
   { label: '🚿 Banheiro de baixo', key: 'banhBaixo' },
   { label: '🛁 Banheiro suíte', key: 'banhSuite' },
   { label: '🛋️ Sala e corredor', key: 'sala' },
-  { label: '🚽 Lavabo', key: 'lavabo' }
+  { label: '🚽 Lavabo', key: 'lavabo' },
 ];
 
 /**
@@ -134,7 +127,7 @@ export const washingSchedule = [
   { day: 'Quarta-feira', users: 'Madre e Navala', dayIndex: 3 },
   { day: 'Quinta-feira', users: 'BBB e B. Smigou', dayIndex: 4 },
   { day: 'Sexta-feira', users: 'Leidi e B. Total', dayIndex: 5 },
-  { day: 'Sábado', users: 'I. Ivan', dayIndex: 6 }
+  { day: 'Sábado', users: 'I. Ivan', dayIndex: 6 },
 ];
 
 /**
@@ -146,7 +139,7 @@ export const appConfig = {
   /** Chave para salvar preferência de tema no localStorage */
   themeStorageKey: 'escalas-tabajara-theme',
   /** Classe CSS para modo escuro */
-  darkModeClass: 'dark-mode'
+  darkModeClass: 'dark-mode',
 };
 
 /**
@@ -156,5 +149,5 @@ export const themeConfig = {
   lightIcon: '☀️',
   darkIcon: '🌙',
   lightLabel: 'Alternar para modo escuro',
-  darkLabel: 'Alternar para modo claro'
+  darkLabel: 'Alternar para modo claro',
 };
