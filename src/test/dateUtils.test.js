@@ -174,3 +174,27 @@ describe('dateUtils', () => {
     });
   });
 });
+
+export const getWeekDifference = (date1, date2) => {
+  if (!(date1 instanceof Date) || isNaN(date1.getTime()) ||
+      !(date2 instanceof Date) || isNaN(date2.getTime())) {
+    throw new Error('Datas inválidas fornecidas para cálculo de diferença');
+  }
+
+  const msPerWeek = 1000 * 60 * 60 * 24 * 7;
+
+  // Alinha ambas as datas para a segunda-feira da semana
+  const getMonday = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = (day === 0 ? -6 : 1 - day);
+    d.setDate(d.getDate() + diff);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  };
+
+  const monday1 = getMonday(date1);
+  const monday2 = getMonday(date2);
+
+  return Math.floor((monday1 - monday2) / msPerWeek);
+};
