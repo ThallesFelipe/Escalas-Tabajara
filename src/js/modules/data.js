@@ -121,12 +121,12 @@ export const rooms = [
  * Dados da escala da máquina de lavar por dia da semana
  */
 export const washingSchedule = [
-  { day: 'Domingo', users: 'Espalha Lixo e B. Rita', dayIndex: 0 },
+  { day: 'Domingo', users: 'Espalha Lixo e Rita', dayIndex: 0 },
   { day: 'Segunda-feira', users: 'B. Gaga e B. Alexa', dayIndex: 1 },
   { day: 'Terça-feira', users: 'Latam, TPM e A. Viihtube', dayIndex: 2 },
   { day: 'Quarta-feira', users: 'Madre e Navala', dayIndex: 3 },
-  { day: 'Quinta-feira', users: 'BBB e B. Smigou', dayIndex: 4 },
-  { day: 'Sexta-feira', users: 'Leidi e B. Total', dayIndex: 5 },
+  { day: 'Quinta-feira', users: 'BBB e Smigou', dayIndex: 4 },
+  { day: 'Sexta-feira', users: 'Leidi', dayIndex: 5 },
   { day: 'Sábado', users: 'I. Ivan', dayIndex: 6 },
 ];
 
