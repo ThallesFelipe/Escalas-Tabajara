@@ -78,10 +78,6 @@ Durante o desenvolvimento deste projeto, adquiri experiência em:
 - Testes unitários com Vitest
 - Otimização de performance em aplicações web
 
-## 📱 Capturas de Tela
-
-[Imagens serão adicionadas em breve]
-
 ## 📄 Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
