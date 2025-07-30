@@ -12,10 +12,10 @@ export const formatDate = (date) => {
   if (!(date instanceof Date) || isNaN(date.getTime())) {
     throw new Error('Data inválida fornecida para formatação');
   }
-  
-  return date.toLocaleDateString('pt-BR', { 
-    day: '2-digit', 
-    month: '2-digit' 
+
+  return date.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit'
   });
 };
 
@@ -28,7 +28,7 @@ export const formatDate = (date) => {
  */
 export const getWeekDifference = (date1, date2) => {
   if (!(date1 instanceof Date) || isNaN(date1.getTime()) ||
-      !(date2 instanceof Date) || isNaN(date2.getTime())) {
+    !(date2 instanceof Date) || isNaN(date2.getTime())) {
     throw new Error('Datas inválidas fornecidas para cálculo de diferença');
   }
 
@@ -64,10 +64,10 @@ export const getMondayDate = (date) => {
   const currentDay = date.getDay();
   const diffToMonday = (currentDay === 0 ? -6 : 1 - currentDay);
   const mondayDate = new Date(date);
-  
+
   mondayDate.setDate(date.getDate() + diffToMonday);
   mondayDate.setHours(0, 0, 0, 0);
-  
+
   return mondayDate;
 };
 
@@ -80,32 +80,32 @@ export const getMondayDate = (date) => {
  */
 export const calculateWeekCycles = (currentDate, referenceDate, scheduleData) => {
   if (!(currentDate instanceof Date) || isNaN(currentDate.getTime()) ||
-      !(referenceDate instanceof Date) || isNaN(referenceDate.getTime())) {
+    !(referenceDate instanceof Date) || isNaN(referenceDate.getTime())) {
     throw new Error('Datas inválidas fornecidas para cálculo de ciclos');
   }
 
   let referenceDate2 = new Date(currentDate);
-  
+
   // Se for domingo, usar a próxima segunda-feira
   if (currentDate.getDay() === 0) {
     referenceDate2.setDate(currentDate.getDate() + 1);
   }
-  
+
   const mondayDate = getMondayDate(referenceDate2);
   const weekDiff = Math.max(0, getWeekDifference(mondayDate, referenceDate));
-  
+
   // Calcula os índices dos ciclos para cada dia
   const mondayCycleIndex = weekDiff % (scheduleData.monday?.length || 1);
   const wednesdayCycleIndex = weekDiff % (scheduleData.wednesday?.length || 1);
   const fridayCycleIndex = weekDiff % (scheduleData.friday?.length || 1);
-  
+
   // Calcula as datas da quarta e sexta
   const wednesdayDate = new Date(mondayDate);
   wednesdayDate.setDate(mondayDate.getDate() + 2);
-  
+
   const fridayDate = new Date(mondayDate);
   fridayDate.setDate(mondayDate.getDate() + 4);
-  
+
   return {
     mondayDate,
     wednesdayDate,
@@ -125,11 +125,11 @@ export const isToday = (date) => {
   if (!(date instanceof Date) || isNaN(date.getTime())) {
     return false;
   }
-  
+
   const today = new Date();
   return date.getDate() === today.getDate() &&
-         date.getMonth() === today.getMonth() &&
-         date.getFullYear() === today.getFullYear();
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear();
 };
 
 /**
@@ -142,7 +142,7 @@ export const getDayName = (dayIndex) => {
     'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
     'Quinta-feira', 'Sexta-feira', 'Sábado'
   ];
-  
+
   return days[dayIndex] || 'Dia inválido';
 };
 
@@ -156,9 +156,9 @@ export const isValidDateRange = (date, yearsRange = 10) => {
   if (!(date instanceof Date) || isNaN(date.getTime())) {
     return false;
   }
-  
+
   const currentYear = new Date().getFullYear();
   const dateYear = date.getFullYear();
-  
+
   return Math.abs(dateYear - currentYear) <= yearsRange;
 };

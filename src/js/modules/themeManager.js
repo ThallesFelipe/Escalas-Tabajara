@@ -13,7 +13,7 @@ export class ThemeManager {
     this.domCache = domCache;
     this.isDarkMode = false;
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     this.init();
   }
 
@@ -34,7 +34,7 @@ export class ThemeManager {
   loadSavedTheme() {
     try {
       const savedTheme = localStorage.getItem(appConfig.themeStorageKey);
-      
+
       if (savedTheme !== null) {
         this.isDarkMode = savedTheme === 'dark';
       } else {
@@ -53,7 +53,7 @@ export class ThemeManager {
    */
   setupEventListeners() {
     const themeToggle = this.domCache.get('themeToggle');
-    
+
     DOMUtils.safeAddEventListener(themeToggle, 'click', () => {
       this.toggleTheme();
     });
@@ -121,7 +121,7 @@ export class ThemeManager {
   saveTheme() {
     try {
       localStorage.setItem(
-        appConfig.themeStorageKey, 
+        appConfig.themeStorageKey,
         this.isDarkMode ? 'dark' : 'light'
       );
     } catch (error) {

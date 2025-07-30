@@ -3,10 +3,10 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { 
-  formatDate, 
-  getWeekDifference, 
-  getMondayDate, 
+import {
+  formatDate,
+  getWeekDifference,
+  getMondayDate,
   calculateWeekCycles,
   isToday,
   getDayName,
@@ -145,9 +145,9 @@ describe('dateUtils', () => {
     it('deve calcular ciclos corretamente', () => {
       const currentDate = new Date(2023, 4, 15); // Segunda
       const referenceDate = new Date(2023, 4, 8); // Segunda anterior
-      
+
       const result = calculateWeekCycles(currentDate, referenceDate, mockScheduleData);
-      
+
       expect(result).toHaveProperty('mondayDate');
       expect(result).toHaveProperty('wednesdayDate');
       expect(result).toHaveProperty('fridayDate');
@@ -159,16 +159,16 @@ describe('dateUtils', () => {
     it('deve tratar domingo corretamente', () => {
       const sunday = new Date(2023, 4, 21);
       const referenceDate = new Date(2023, 4, 8);
-      
+
       const result = calculateWeekCycles(sunday, referenceDate, mockScheduleData);
-      
+
       expect(result.mondayDate.getDay()).toBe(1); // Segunda
     });
 
     it('deve lançar erro para datas inválidas', () => {
       const invalidDate = new Date('invalid');
       const validDate = new Date(2023, 4, 15);
-      
+
       expect(() => calculateWeekCycles(invalidDate, validDate, mockScheduleData)).toThrow();
       expect(() => calculateWeekCycles(validDate, invalidDate, mockScheduleData)).toThrow();
     });
@@ -177,7 +177,7 @@ describe('dateUtils', () => {
 
 export const getWeekDifference = (date1, date2) => {
   if (!(date1 instanceof Date) || isNaN(date1.getTime()) ||
-      !(date2 instanceof Date) || isNaN(date2.getTime())) {
+    !(date2 instanceof Date) || isNaN(date2.getTime())) {
     throw new Error('Datas inválidas fornecidas para cálculo de diferença');
   }
 

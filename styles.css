@@ -38,7 +38,6 @@ h6 {
     overflow-wrap: break-word;
 }
 
-/* --- Variables --- */
 :root {
     --color-primary: #ff6b6b;
     --color-background: #fff5f5;

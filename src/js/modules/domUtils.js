@@ -82,25 +82,25 @@ export class DOMUtils {
    */
   static createElement(tag, options = {}) {
     const element = document.createElement(tag);
-    
+
     if (options.classes) {
       element.classList.add(...options.classes);
     }
-    
+
     if (options.attributes) {
       for (const [key, value] of Object.entries(options.attributes)) {
         element.setAttribute(key, value);
       }
     }
-    
+
     if (options.textContent) {
       element.textContent = options.textContent;
     }
-    
+
     if (options.innerHTML) {
       element.innerHTML = options.innerHTML;
     }
-    
+
     return element;
   }
 

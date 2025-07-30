@@ -26,7 +26,7 @@ export class WashingScheduleManager {
    */
   highlightCurrentWashingDay() {
     const tableBody = this.domCache.get('washingTableBody');
-    
+
     if (!tableBody) {
       console.warn('Tabela da máquina de lavar não encontrada');
       return;
@@ -45,17 +45,17 @@ export class WashingScheduleManager {
 
       // Encontra e destaca a linha correspondente ao dia atual
       const rows = tableBody.querySelectorAll('tr');
-      
+
       if (rows[currentDayIndex]) {
         DOMUtils.safeAddClass(rows[currentDayIndex], 'current-day');
-        
+
         // Adiciona atributo ARIA para acessibilidade
         DOMUtils.safeSetAttribute(
-          rows[currentDayIndex], 
-          'aria-current', 
+          rows[currentDayIndex],
+          'aria-current',
           'date'
         );
-        
+
         // Remove atributo ARIA das outras linhas
         rows.forEach((row, index) => {
           if (index !== currentDayIndex) {
@@ -83,8 +83,8 @@ export class WashingScheduleManager {
     try {
       // Verifica se a linha está visível na viewport
       const rect = currentRow.getBoundingClientRect();
-      const isVisible = rect.top >= 0 && 
-                       rect.bottom <= window.innerHeight;
+      const isVisible = rect.top >= 0 &&
+        rect.bottom <= window.innerHeight;
 
       if (!isVisible) {
         currentRow.scrollIntoView({
@@ -127,7 +127,7 @@ export class WashingScheduleManager {
   getTodayWashingInfo() {
     const today = new Date();
     const currentDayIndex = today.getDay();
-    
+
     return washingSchedule.find(day => day.dayIndex === currentDayIndex) || null;
   }
 
@@ -141,7 +141,7 @@ export class WashingScheduleManager {
       console.warn('Índice de dia inválido. Use 0-6 (domingo-sábado)');
       return null;
     }
-    
+
     return washingSchedule.find(day => day.dayIndex === dayIndex) || null;
   }
 
@@ -160,9 +160,9 @@ export class WashingScheduleManager {
    */
   isUserScheduledToday(userName) {
     const todayInfo = this.getTodayWashingInfo();
-    
+
     if (!todayInfo) return false;
-    
+
     return todayInfo.users.toLowerCase().includes(userName.toLowerCase());
   }
 
@@ -172,7 +172,7 @@ export class WashingScheduleManager {
    * @returns {Array} Array com os dias em que o usuário usa a máquina
    */
   findUserDays(userName) {
-    return washingSchedule.filter(day => 
+    return washingSchedule.filter(day =>
       day.users.toLowerCase().includes(userName.toLowerCase())
     );
   }
@@ -182,7 +182,7 @@ export class WashingScheduleManager {
    */
   renderWashingTable() {
     const tableBody = this.domCache.get('washingTableBody');
-    
+
     if (!tableBody) {
       console.error('Container da tabela da máquina de lavar não encontrado');
       return;

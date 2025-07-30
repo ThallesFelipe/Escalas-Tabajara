@@ -31,10 +31,10 @@ class EscalasTabajaraApp {
   async init() {
     try {
       console.log('🧹 Inicializando Sistema de Escalas da República Tabajara...');
-      
+
       // Inicializa o cache DOM
       this.domCache = new DOMCache();
-      
+
       // Valida elementos essenciais
       if (!this.domCache.validateEssentialElements()) {
         throw new Error('Elementos essenciais do DOM não encontrados');
@@ -73,11 +73,11 @@ class EscalasTabajaraApp {
     try {
       const today = new Date();
       const cycleData = calculateWeekCycles(today, appConfig.referenceDate, scheduleData);
-      
+
       if (this.scheduleRenderer) {
         this.scheduleRenderer.renderSchedule(cycleData, scheduleData);
       }
-      
+
     } catch (error) {
       console.error('Erro ao renderizar escala de limpeza:', error);
       this.handleScheduleError(error);
@@ -155,7 +155,7 @@ class EscalasTabajaraApp {
    */
   handleScheduleError(error) {
     console.error('Erro na escala:', error);
-    
+
     const container = this.domCache?.get('scheduleContainer');
     if (container) {
       container.innerHTML = `
@@ -177,13 +177,13 @@ class EscalasTabajaraApp {
   handleGlobalError(error) {
     console.error('Erro global capturado:', error);
     this.errorCount++;
-    
+
     // Evita spam de logs para o mesmo erro
     const errorMessage = error instanceof Error ? error.message : String(error);
     if (this.lastError && this.lastError === errorMessage) {
       return;
     }
-    
+
     this.lastError = errorMessage;
   }
 
@@ -211,13 +211,13 @@ class EscalasTabajaraApp {
     }
 
     console.log('🔄 Forçando atualização...');
-    
+
     this.renderCleaningSchedule();
     if (this.washingManager) {
       this.washingManager.highlightCurrentWashingDay();
     }
     this.updateFooterYear();
-    
+
     this.lastUpdate = new Date();
     console.log('✅ Atualização concluída');
   }
@@ -241,12 +241,12 @@ const initializeApp = async () => {
   try {
     app = new EscalasTabajaraApp();
     await app.init();
-    
+
     // Expõe a instância globalmente para debugging
     if (typeof window !== 'undefined') {
       window.EscalasApp = app;
     }
-    
+
   } catch (error) {
     console.error('Falha crítica na inicialização:', error);
   }

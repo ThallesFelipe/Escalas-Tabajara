@@ -23,7 +23,7 @@ export class ScheduleRenderer {
    */
   renderSchedule(cycleData, scheduleData) {
     const container = this.domCache.get('scheduleContainer');
-    
+
     if (!container) {
       console.error('Container da escala não encontrado');
       return;
@@ -153,7 +153,7 @@ export class ScheduleRenderer {
    */
   createRoomElement(room, schedule) {
     const responsible = schedule[room.key] || 'Não definido';
-    
+
     const roomElement = this.createElement('div', {
       className: 'room',
       attributes: {
@@ -237,7 +237,7 @@ export class ScheduleRenderer {
    */
   renderErrorMessage(container) {
     this.clearElement(container);
-    
+
     const errorElement = this.createElement('div', {
       className: 'error-message',
       innerHTML: `

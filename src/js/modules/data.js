@@ -41,19 +41,19 @@ export const scheduleData = {
     {
       cozinha: 'Rita',
       banhBaixo: 'LATAM',
-      banhSuite: 'TPM',
+      banhSuite: 'Navala',
       sala: 'Smigou',
       lavabo: 'Smigou',
     },
-    { 
-      cozinha: 'Smigou', 
-      banhBaixo: 'Rita', 
-      banhSuite: 'LATAM', 
-      sala: 'TPM', 
-      lavabo: 'TPM' 
+    {
+      cozinha: 'Smigou',
+      banhBaixo: 'Rita',
+      banhSuite: 'LATAM',
+      sala: 'Navala',
+      lavabo: 'Navala'
     },
     {
-      cozinha: 'TPM',
+      cozinha: 'Navala',
       banhBaixo: 'Smigou',
       banhSuite: 'Rita',
       sala: 'LATAM',
@@ -61,7 +61,7 @@ export const scheduleData = {
     },
     {
       cozinha: 'LATAM',
-      banhBaixo: 'TPM',
+      banhBaixo: 'Navala',
       banhSuite: 'Smigou',
       sala: 'Rita',
       lavabo: 'Rita',
@@ -70,37 +70,30 @@ export const scheduleData = {
   friday: [
     {
       cozinha: 'BBB',
-      banhBaixo: 'Leidi',
-      banhSuite: 'Madre',
-      sala: 'Espalha',
-      lavabo: 'Navala',
+      banhBaixo: 'Madre',
+      banhSuite: 'Espalha',
+      sala: 'Leidi',
+      lavabo: 'Leidi',
     },
     {
-      cozinha: 'Navala',
+      cozinha: 'Leidi',
       banhBaixo: 'BBB',
-      banhSuite: 'Leidi',
-      sala: 'Madre',
+      banhSuite: 'Madre',
+      sala: 'Espalha',
       lavabo: 'Espalha',
     },
     {
       cozinha: 'Espalha',
-      banhBaixo: 'Navala',
+      banhBaixo: 'Leidi',
       banhSuite: 'BBB',
-      sala: 'Leidi',
+      sala: 'Madre',
       lavabo: 'Madre',
     },
     {
       cozinha: 'Madre',
       banhBaixo: 'Espalha',
-      banhSuite: 'Navala',
+      banhSuite: 'Leidi',
       sala: 'BBB',
-      lavabo: 'Leidi',
-    },
-    {
-      cozinha: 'Leidi',
-      banhBaixo: 'Madre',
-      banhSuite: 'Espalha',
-      sala: 'Navala',
       lavabo: 'BBB',
     },
   ],
@@ -123,7 +116,7 @@ export const rooms = [
 export const washingSchedule = [
   { day: 'Domingo', users: 'Espalha Lixo e Rita', dayIndex: 0 },
   { day: 'Segunda-feira', users: 'B. Gaga e B. Alexa', dayIndex: 1 },
-  { day: 'Terça-feira', users: 'Latam, TPM e A. Viihtube', dayIndex: 2 },
+  { day: 'Terça-feira', users: 'Latam e A. Viihtube', dayIndex: 2 },
   { day: 'Quarta-feira', users: 'Madre e Navala', dayIndex: 3 },
   { day: 'Quinta-feira', users: 'BBB e Smigou', dayIndex: 4 },
   { day: 'Sexta-feira', users: 'Leidi', dayIndex: 5 },
