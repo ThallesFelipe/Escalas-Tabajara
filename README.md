@@ -16,7 +16,7 @@ Decidi transformar esse problema em uma oportunidade de aprendizado, criando uma
 
 ## ✨ Funcionalidades
 
-- **Escala de Limpeza**: Exibição das tarefas de limpeza para segunda, quarta e sexta-feira
+- **Escala de Limpeza**: Exibição das tarefas de limpeza para segunda, quarta e Quinta e Sexta
 - **Rotação Automática**: Sistema inteligente que calcula a rotação das responsabilidades a cada semana
 - **Escala da Máquina de Lavar**: Tabela com os dias e horários reservados para cada morador
 - **Design Responsivo**: Funciona perfeitamente em desktops, tablets e celulares

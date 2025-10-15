@@ -34,8 +34,8 @@ export const getWeekDifference = (date1, date2) => {
 
   const msPerWeek = 1000 * 60 * 60 * 24 * 7;
 
-  // Alinha ambas as datas para a segunda-feira da semana
-  const getMonday = (date) => {
+  // Alinha ambas as datas para a Segunda e Terça da semana
+  const getmonday_tuesday = (date) => {
     const d = new Date(date);
     const day = d.getDay();
     const diff = (day === 0 ? -6 : 1 - day);
@@ -44,31 +44,31 @@ export const getWeekDifference = (date1, date2) => {
     return d;
   };
 
-  const monday1 = getMonday(date1);
-  const monday2 = getMonday(date2);
+  const monday_tuesday1 = getmonday_tuesday(date1);
+  const monday_tuesday2 = getmonday_tuesday(date2);
 
-  return Math.floor((monday1 - monday2) / msPerWeek);
+  return Math.floor((monday_tuesday1 - monday_tuesday2) / msPerWeek);
 };
 
 /**
- * Encontra a data da segunda-feira da semana de uma data específica
+ * Encontra a data da Segunda e Terça da semana de uma data específica
  * @param {Date} date - Data de referência
- * @returns {Date} Data da segunda-feira da mesma semana
+ * @returns {Date} Data da Segunda e Terça da mesma semana
  * @throws {Error} Se a data for inválida
  */
-export const getMondayDate = (date) => {
+export const getmonday_tuesdayDate = (date) => {
   if (!(date instanceof Date) || isNaN(date.getTime())) {
-    throw new Error('Data inválida fornecida para encontrar segunda-feira');
+    throw new Error('Data inválida fornecida para encontrar Segunda e Terça');
   }
 
   const currentDay = date.getDay();
-  const diffToMonday = (currentDay === 0 ? -6 : 1 - currentDay);
-  const mondayDate = new Date(date);
+  const diffTomonday_tuesday = (currentDay === 0 ? -6 : 1 - currentDay);
+  const monday_tuesdayDate = new Date(date);
 
-  mondayDate.setDate(date.getDate() + diffToMonday);
-  mondayDate.setHours(0, 0, 0, 0);
+  monday_tuesdayDate.setDate(date.getDate() + diffTomonday_tuesday);
+  monday_tuesdayDate.setHours(0, 0, 0, 0);
 
-  return mondayDate;
+  return monday_tuesdayDate;
 };
 
 /**
@@ -86,33 +86,27 @@ export const calculateWeekCycles = (currentDate, referenceDate, scheduleData) =>
 
   let referenceDate2 = new Date(currentDate);
 
-  // Se for domingo, usar a próxima segunda-feira
+  // Se for domingo, usar a próxima Segunda e Terça
   if (currentDate.getDay() === 0) {
     referenceDate2.setDate(currentDate.getDate() + 1);
   }
 
-  const mondayDate = getMondayDate(referenceDate2);
-  const weekDiff = Math.max(0, getWeekDifference(mondayDate, referenceDate));
+  const monday_tuesdayDate = getmonday_tuesdayDate(referenceDate2);
+  const weekDiff = Math.max(0, getWeekDifference(monday_tuesdayDate, referenceDate));
 
   // Calcula os índices dos ciclos para cada dia
-  const mondayCycleIndex = weekDiff % (scheduleData.monday?.length || 1);
-  const wednesdayCycleIndex = weekDiff % (scheduleData.wednesday?.length || 1);
-  const fridayCycleIndex = weekDiff % (scheduleData.friday?.length || 1);
+  const monday_tuesdayCycleIndex = weekDiff % (scheduleData.monday_tuesday?.length || 1);
+  const thursday_fridayCycleIndex = weekDiff % (scheduleData.thursday_friday?.length || 1);
 
-  // Calcula as datas da quarta e sexta
-  const wednesdayDate = new Date(mondayDate);
-  wednesdayDate.setDate(mondayDate.getDate() + 2);
-
-  const fridayDate = new Date(mondayDate);
-  fridayDate.setDate(mondayDate.getDate() + 4);
+  // Calcula a data da quinta e sexta
+  const thursday_fridayDate = new Date(monday_tuesdayDate);
+  thursday_fridayDate.setDate(monday_tuesdayDate.getDate() + 4);
 
   return {
-    mondayDate,
-    wednesdayDate,
-    fridayDate,
-    mondayCycleIndex,
-    wednesdayCycleIndex,
-    fridayCycleIndex
+    monday_tuesdayDate,
+    thursday_fridayDate,
+    monday_tuesdayCycleIndex,
+    thursday_fridayCycleIndex
   };
 };
 
@@ -139,8 +133,8 @@ export const isToday = (date) => {
  */
 export const getDayName = (dayIndex) => {
   const days = [
-    'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
-    'Quinta-feira', 'Sexta-feira', 'Sábado'
+    'Domingo', 'Segunda e Terça', 'Terça-feira', 'Quarta-feira',
+    'Quinta-feira', 'Quinta e Sexta', 'Sábado'
   ];
 
   return days[dayIndex] || 'Dia inválido';

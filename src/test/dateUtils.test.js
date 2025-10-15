@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   formatDate,
   getWeekDifference,
-  getMondayDate,
+  getmonday_tuesdayDate,
   calculateWeekCycles,
   isToday,
   getDayName,
@@ -53,31 +53,31 @@ describe('dateUtils', () => {
     });
   });
 
-  describe('getMondayDate', () => {
-    it('deve retornar a própria data se for segunda-feira', () => {
-      const monday = new Date(2023, 4, 15); // Segunda-feira
-      const result = getMondayDate(monday);
+  describe('getmonday_tuesdayDate', () => {
+    it('deve retornar a própria data se for Segunda e Terça', () => {
+      const monday_tuesday = new Date(2023, 4, 15); // Segunda e Terça
+      const result = getmonday_tuesdayDate(monday_tuesday);
       expect(result.getDay()).toBe(1); // Segunda
       expect(result.getDate()).toBe(15);
     });
 
-    it('deve retornar a segunda-feira anterior para outros dias', () => {
+    it('deve retornar a Segunda e Terça anterior para outros dias', () => {
       const wednesday = new Date(2023, 4, 17); // Quarta-feira
-      const result = getMondayDate(wednesday);
+      const result = getmonday_tuesdayDate(wednesday);
       expect(result.getDay()).toBe(1); // Segunda
       expect(result.getDate()).toBe(15);
     });
 
     it('deve tratar domingo corretamente', () => {
       const sunday = new Date(2023, 4, 21); // Domingo
-      const result = getMondayDate(sunday);
+      const result = getmonday_tuesdayDate(sunday);
       expect(result.getDay()).toBe(1); // Segunda
       expect(result.getDate()).toBe(15);
     });
 
     it('deve lançar erro para data inválida', () => {
       const invalidDate = new Date('invalid');
-      expect(() => getMondayDate(invalidDate)).toThrow();
+      expect(() => getmonday_tuesdayDate(invalidDate)).toThrow();
     });
   });
 
@@ -102,7 +102,7 @@ describe('dateUtils', () => {
   describe('getDayName', () => {
     it('deve retornar nomes corretos dos dias', () => {
       expect(getDayName(0)).toBe('Domingo');
-      expect(getDayName(1)).toBe('Segunda-feira');
+      expect(getDayName(1)).toBe('Segunda e Terça');
       expect(getDayName(6)).toBe('Sábado');
     });
 
@@ -136,9 +136,9 @@ describe('dateUtils', () => {
 
     beforeEach(() => {
       mockScheduleData = {
-        monday: [{ cozinha: 'A' }, { cozinha: 'B' }],
+        monday_tuesday: [{ cozinha: 'A' }, { cozinha: 'B' }],
         wednesday: [{ cozinha: 'C' }, { cozinha: 'D' }, { cozinha: 'E' }],
-        friday: [{ cozinha: 'F' }]
+        thursday_friday: [{ cozinha: 'F' }]
       };
     });
 
@@ -148,12 +148,12 @@ describe('dateUtils', () => {
 
       const result = calculateWeekCycles(currentDate, referenceDate, mockScheduleData);
 
-      expect(result).toHaveProperty('mondayDate');
+      expect(result).toHaveProperty('monday_tuesdayDate');
       expect(result).toHaveProperty('wednesdayDate');
-      expect(result).toHaveProperty('fridayDate');
-      expect(result).toHaveProperty('mondayCycleIndex');
+      expect(result).toHaveProperty('thursday_fridayDate');
+      expect(result).toHaveProperty('monday_tuesdayCycleIndex');
       expect(result).toHaveProperty('wednesdayCycleIndex');
-      expect(result).toHaveProperty('fridayCycleIndex');
+      expect(result).toHaveProperty('thursday_fridayCycleIndex');
     });
 
     it('deve tratar domingo corretamente', () => {
@@ -162,7 +162,7 @@ describe('dateUtils', () => {
 
       const result = calculateWeekCycles(sunday, referenceDate, mockScheduleData);
 
-      expect(result.mondayDate.getDay()).toBe(1); // Segunda
+      expect(result.monday_tuesdayDate.getDay()).toBe(1); // Segunda
     });
 
     it('deve lançar erro para datas inválidas', () => {
@@ -183,8 +183,8 @@ export const getWeekDifference = (date1, date2) => {
 
   const msPerWeek = 1000 * 60 * 60 * 24 * 7;
 
-  // Alinha ambas as datas para a segunda-feira da semana
-  const getMonday = (date) => {
+  // Alinha ambas as datas para a Segunda e Terça da semana
+  const getmonday_tuesday = (date) => {
     const d = new Date(date);
     const day = d.getDay();
     const diff = (day === 0 ? -6 : 1 - day);
@@ -193,8 +193,8 @@ export const getWeekDifference = (date1, date2) => {
     return d;
   };
 
-  const monday1 = getMonday(date1);
-  const monday2 = getMonday(date2);
+  const monday_tuesday1 = getmonday_tuesday(date1);
+  const monday_tuesday2 = getmonday_tuesday(date2);
 
-  return Math.floor((monday1 - monday2) / msPerWeek);
+  return Math.floor((monday_tuesday1 - monday_tuesday2) / msPerWeek);
 };

@@ -34,31 +34,23 @@ export class ScheduleRenderer {
 
     try {
       // Cria as colunas para cada dia
-      const mondayColumn = this.createScheduleColumn(
-        'monday',
-        'Segunda-feira',
-        scheduleData.monday?.[cycleData.mondayCycleIndex],
-        cycleData.mondayDate
+      const monday_tuesdayColumn = this.createScheduleColumn(
+        'monday_tuesday',
+        'Segunda e Terça',
+        scheduleData.monday_tuesday?.[cycleData.monday_tuesdayCycleIndex],
+        cycleData.monday_tuesdayDate
       );
 
-      const wednesdayColumn = this.createScheduleColumn(
-        'wednesday',
-        'Quarta-feira',
-        scheduleData.wednesday?.[cycleData.wednesdayCycleIndex],
-        cycleData.wednesdayDate
-      );
-
-      const fridayColumn = this.createScheduleColumn(
-        'friday',
-        'Sexta-feira',
-        scheduleData.friday?.[cycleData.fridayCycleIndex],
-        cycleData.fridayDate
+      const thursday_fridayColumn = this.createScheduleColumn(
+        'thursday_friday',
+        'Quinta e Sexta',
+        scheduleData.thursday_friday?.[cycleData.thursday_fridayCycleIndex],
+        cycleData.thursday_fridayDate
       );
 
       // Adiciona as colunas ao container
-      container.appendChild(mondayColumn);
-      container.appendChild(wednesdayColumn);
-      container.appendChild(fridayColumn);
+      container.appendChild(monday_tuesdayColumn);
+      container.appendChild(thursday_fridayColumn);
 
       // Destaca o dia atual
       this.highlightCurrentDay(cycleData);
@@ -222,12 +214,13 @@ export class ScheduleRenderer {
     });
 
     // Destaca o dia atual
-    if (todayWeekDay === 1 && isToday(cycleData.mondayDate)) {
-      document.getElementById('monday')?.classList.add('current-day');
-    } else if (todayWeekDay === 3 && isToday(cycleData.wednesdayDate)) {
-      document.getElementById('wednesday')?.classList.add('current-day');
-    } else if (todayWeekDay === 5 && isToday(cycleData.fridayDate)) {
-      document.getElementById('friday')?.classList.add('current-day');
+    // Segunda (1) ou Terça (2) - destaca a coluna de Segunda e Terça
+    if (todayWeekDay === 1 || todayWeekDay === 2) {
+      document.getElementById('monday_tuesday')?.classList.add('current-day');
+    }
+    // Quinta (4) ou Sexta (5) - destaca a coluna de Quinta e Sexta
+    else if (todayWeekDay === 4 || todayWeekDay === 5) {
+      document.getElementById('thursday_friday')?.classList.add('current-day');
     }
   }
 

@@ -7,93 +7,71 @@
  * Organizado por dia da semana com rotação de responsabilidades
  */
 export const scheduleData = {
-  monday: [
-    {
-      cozinha: 'A. Viihtube',
-      banhBaixo: 'Bixo Gaga',
-      banhSuite: 'Bixo Alexa',
-      sala: 'I. Ivan',
-      lavabo: 'I. Ivan',
-    },
-    {
-      cozinha: 'I. Ivan',
-      banhBaixo: 'A. Viihtube',
-      banhSuite: 'Bixo Gaga',
-      sala: 'Bixo Alexa',
-      lavabo: 'Bixo Alexa',
-    },
-    {
-      cozinha: 'Bixo Alexa',
-      banhBaixo: 'I. Ivan',
-      banhSuite: 'A. Viihtube',
-      sala: 'Bixo Gaga',
-      lavabo: 'Bixo Gaga',
-    },
-    {
-      cozinha: 'Bixo Gaga',
-      banhBaixo: 'Bixo Alexa',
-      banhSuite: 'I. Ivan',
-      sala: 'A. Viihtube',
-      lavabo: 'A. Viihtube',
-    },
-  ],
-  wednesday: [
-    {
-      cozinha: 'Rita',
-      banhBaixo: 'LATAM',
-      banhSuite: 'Navala',
-      sala: 'Smigou',
-      lavabo: 'Smigou',
-    },
+  monday_tuesday: [
     {
       cozinha: 'Smigou',
       banhBaixo: 'Rita',
-      banhSuite: 'LATAM',
-      sala: 'Navala',
-      lavabo: 'Navala'
+      banhSuite: 'B. Gaga',
+      sala: 'A. Viihtube',
+      lavabo: 'A. Viihtube',
     },
     {
-      cozinha: 'Navala',
+      cozinha: 'A. Viihtube',
       banhBaixo: 'Smigou',
       banhSuite: 'Rita',
-      sala: 'LATAM',
-      lavabo: 'LATAM',
+      sala: 'B. Gaga',
+      lavabo: 'B. Gaga',
     },
     {
-      cozinha: 'LATAM',
-      banhBaixo: 'Navala',
+      cozinha: 'B. Gaga',
+      banhBaixo: 'A. Viihtube',
       banhSuite: 'Smigou',
       sala: 'Rita',
       lavabo: 'Rita',
     },
+    {
+      cozinha: 'Rita',
+      banhBaixo: 'B. Gaga',
+      banhSuite: 'A. Viihtube',
+      sala: 'Smigou',
+      lavabo: 'Smigou',
+    }
   ],
-  friday: [
+
+  thursday_friday: [
     {
       cozinha: 'BBB',
-      banhBaixo: 'Madre',
-      banhSuite: 'Espalha',
+      banhBaixo: 'Leidi',
+      banhBaixo: 'Espalha Lixo',
+      sala: 'Navala',
+      lavabo: 'LATAM',
+    },
+    {
+      cozinha: 'LATAM',
+      banhBaixo: 'BBB',
+      banhSuite: 'Leidi',
+      sala: 'Espalha Lixo',
+      lavabo: 'Navala',
+    },
+    {
+      cozinha: 'Navala',
+      banhBaixo: 'LATAM',
+      banhSuite: 'BBB',
       sala: 'Leidi',
+      lavabo: 'Espalha Lixo',
+    },
+    {
+      cozinha: 'Espalha Lixo',
+      banhBaixo: 'Navala',
+      banhSuite: 'LATAM',
+      sala: 'BBB',
       lavabo: 'Leidi',
     },
     {
       cozinha: 'Leidi',
-      banhBaixo: 'BBB',
-      banhSuite: 'Madre',
-      sala: 'Espalha',
-      lavabo: 'Espalha',
-    },
-    {
-      cozinha: 'Espalha',
-      banhBaixo: 'Leidi',
-      banhSuite: 'BBB',
-      sala: 'Madre',
-      lavabo: 'Madre',
-    },
-    {
-      cozinha: 'Madre',
-      banhBaixo: 'Espalha',
-      banhSuite: 'Leidi',
-      sala: 'BBB',
+      banhBaixo: 'Espalha Lixo',
+      banhSuite: 'Navala',
+      sala: 'LATAM',
       lavabo: 'BBB',
     },
   ],
@@ -115,11 +93,11 @@ export const rooms = [
  */
 export const washingSchedule = [
   { day: 'Domingo', users: 'Espalha Lixo e Rita', dayIndex: 0 },
-  { day: 'Segunda-feira', users: 'B. Gaga e B. Alexa', dayIndex: 1 },
+  { day: 'Segunda e Terça', users: 'B. Gaga e B. Alexa', dayIndex: 1 },
   { day: 'Terça-feira', users: 'Latam e A. Viihtube', dayIndex: 2 },
   { day: 'Quarta-feira', users: 'Madre e Navala', dayIndex: 3 },
   { day: 'Quinta-feira', users: 'BBB e Smigou', dayIndex: 4 },
-  { day: 'Sexta-feira', users: 'Leidi', dayIndex: 5 },
+  { day: 'Quinta e Sexta', users: 'Leidi', dayIndex: 5 },
   { day: 'Sábado', users: 'I. Ivan', dayIndex: 6 },
 ];
 
@@ -127,7 +105,7 @@ export const washingSchedule = [
  * Configurações da aplicação
  */
 export const appConfig = {
-  /** Data de referência para o início do ciclo (Segunda-feira, 24 de fevereiro de 2020) */
+  /** Data de referência para o início do ciclo (Segunda e Terça, 24 de fevereiro de 2020) */
   referenceDate: new Date(2020, 1, 24),
   /** Chave para salvar preferência de tema no localStorage */
   themeStorageKey: 'escalas-tabajara-theme',
