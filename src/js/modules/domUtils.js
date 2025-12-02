@@ -19,7 +19,7 @@ export class DOMCache {
   initializeCache() {
     const selectors = {
       scheduleContainer: '#cleaningSchedule',
-      washingTableBody: '.washing-schedule table tbody',
+      washingTableBody: '#washingTableBody',
       themeToggle: '#themeToggle',
       themeIcon: '#themeIcon',
       footerYear: '#currentYear'

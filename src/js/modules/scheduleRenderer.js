@@ -154,6 +154,20 @@ export class ScheduleRenderer {
       }
     });
 
+    // Container para ícone e nome do cômodo
+    const roomInfo = this.createElement('div', {
+      className: 'room-info'
+    });
+
+    // Ícone Material Symbol
+    const icon = this.createElement('span', {
+      className: 'material-symbols-rounded room-icon',
+      textContent: room.icon || 'home',
+      attributes: {
+        'aria-hidden': 'true'
+      }
+    });
+
     const roomName = this.createElement('span', {
       className: 'room-name',
       textContent: room.label,
@@ -161,6 +175,9 @@ export class ScheduleRenderer {
         'aria-hidden': 'true'
       }
     });
+
+    roomInfo.appendChild(icon);
+    roomInfo.appendChild(roomName);
 
     const responsibleSpan = this.createElement('span', {
       className: 'responsible',
@@ -170,7 +187,7 @@ export class ScheduleRenderer {
       }
     });
 
-    roomElement.appendChild(roomName);
+    roomElement.appendChild(roomInfo);
     roomElement.appendChild(responsibleSpan);
     return roomElement;
   }

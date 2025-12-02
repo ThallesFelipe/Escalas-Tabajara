@@ -17,6 +17,7 @@ export class WashingScheduleManager {
    * Inicializa a escala da máquina de lavar
    */
   init() {
+    this.renderWashingTable();
     this.highlightCurrentWashingDay();
     this.setupAutoUpdate();
   }
