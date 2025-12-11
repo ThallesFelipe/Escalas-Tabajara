@@ -91,8 +91,8 @@ export const washingSchedule = [
  * Configurações da aplicação
  */
 export const appConfig = {
-  /** Data de referência para o início do ciclo (Segunda, 24 de fevereiro de 2020) */
-  referenceDate: new Date(2020, 1, 24),
+  /** Data de referência para o início do ciclo (Segunda, 8 de dezembro de 2025) */
+  referenceDate: new Date(2025, 11, 8),
   /** Chave para salvar preferência de tema no localStorage */
   themeStorageKey: 'escalas-tabajara-theme',
   /** Classe CSS para modo escuro */

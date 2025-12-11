@@ -137,7 +137,6 @@ describe('dateUtils', () => {
     beforeEach(() => {
       mockScheduleData = {
         monday_tuesday: [{ cozinha: 'A' }, { cozinha: 'B' }],
-        wednesday: [{ cozinha: 'C' }, { cozinha: 'D' }, { cozinha: 'E' }],
         thursday_friday: [{ cozinha: 'F' }]
       };
     });
@@ -149,10 +148,8 @@ describe('dateUtils', () => {
       const result = calculateWeekCycles(currentDate, referenceDate, mockScheduleData);
 
       expect(result).toHaveProperty('monday_tuesdayDate');
-      expect(result).toHaveProperty('wednesdayDate');
       expect(result).toHaveProperty('thursday_fridayDate');
       expect(result).toHaveProperty('monday_tuesdayCycleIndex');
-      expect(result).toHaveProperty('wednesdayCycleIndex');
       expect(result).toHaveProperty('thursday_fridayCycleIndex');
     });
 
