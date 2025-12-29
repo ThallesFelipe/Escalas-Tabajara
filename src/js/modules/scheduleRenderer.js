@@ -3,7 +3,7 @@
  */
 
 import { rooms } from './data.js';
-import { formatDate, isToday } from './dateUtils.js';
+import { formatDate } from './dateUtils.js';
 
 /**
  * Renderizador da escala de limpeza
@@ -110,7 +110,7 @@ export class ScheduleRenderer {
    * Cria o cabeçalho de uma coluna
    * @param {string} id - ID da coluna
    * @param {string} dayName - Nome do dia
-   * @param {Date} date - Data
+   * @param {Date} date - Data inicial
    * @returns {HTMLElement} Elemento do cabeçalho
    */
   createColumnHeader(id, dayName, date) {
@@ -124,11 +124,17 @@ export class ScheduleRenderer {
       className: 'day-title'
     });
 
+    // Calcula a data final (dia seguinte) para exibir o range
+    const endDate = new Date(date);
+    endDate.setDate(date.getDate() + 1);
+    
+    const dateRangeText = `${formatDate(date)} - ${formatDate(endDate)}`;
+
     const dateSpan = this.createElement('span', {
-      textContent: formatDate(date),
+      textContent: dateRangeText,
       className: 'date-display',
       attributes: {
-        'aria-label': `Data: ${formatDate(date)}`
+        'aria-label': `Datas: ${dateRangeText}`
       }
     });
 
@@ -219,9 +225,9 @@ export class ScheduleRenderer {
 
   /**
    * Destaca o dia atual
-   * @param {import('../types/index.js').CycleCalculation} cycleData - Dados dos ciclos
+   * @param {import('../types/index.js').CycleCalculation} _cycleData - Dados dos ciclos (não utilizado atualmente)
    */
-  highlightCurrentDay(cycleData) {
+  highlightCurrentDay(_cycleData) {
     const today = new Date();
     const todayWeekDay = today.getDay();
 

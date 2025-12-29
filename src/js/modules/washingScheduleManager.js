@@ -44,28 +44,29 @@ export class WashingScheduleManager {
       const today = new Date();
       const currentDayIndex = today.getDay();
 
-      // Encontra e destaca a linha correspondente ao dia atual
+      // Encontra e destaca a linha correspondente ao dia atual usando data-day-index
       const rows = tableBody.querySelectorAll('tr');
+      const currentRow = tableBody.querySelector(`tr[data-day-index="${currentDayIndex}"]`);
 
-      if (rows[currentDayIndex]) {
-        DOMUtils.safeAddClass(rows[currentDayIndex], 'current-day');
+      if (currentRow) {
+        DOMUtils.safeAddClass(currentRow, 'current-day');
 
         // Adiciona atributo ARIA para acessibilidade
         DOMUtils.safeSetAttribute(
-          rows[currentDayIndex],
+          currentRow,
           'aria-current',
           'date'
         );
 
         // Remove atributo ARIA das outras linhas
-        rows.forEach((row, index) => {
-          if (index !== currentDayIndex) {
+        rows.forEach((row) => {
+          if (row !== currentRow) {
             row.removeAttribute('aria-current');
           }
         });
 
         // Rola suavemente para a linha atual se ela estiver fora da visualização
-        this.scrollToCurrentDay(rows[currentDayIndex]);
+        this.scrollToCurrentDay(currentRow);
       }
 
     } catch (error) {
@@ -104,7 +105,7 @@ export class WashingScheduleManager {
    */
   setupAutoUpdate() {
     // Atualiza o destaque a cada minuto para capturar mudanças de dia
-    setInterval(() => {
+    this.updateInterval = setInterval(() => {
       this.highlightCurrentWashingDay();
     }, 60000); // 1 minuto
 
@@ -210,11 +211,11 @@ export class WashingScheduleManager {
   /**
    * Cria uma linha da tabela da máquina de lavar
    * @param {Object} dayInfo - Informações do dia
-   * @param {number} index - Índice da linha
+   * @param {number} _index - Índice da linha (não utilizado)
    * @returns {HTMLElement} Elemento da linha
    * @private
    */
-  createWashingTableRow(dayInfo, index) {
+  createWashingTableRow(dayInfo, _index) {
     const row = DOMUtils.createElement('tr', {
       attributes: {
         'data-day-index': dayInfo.dayIndex.toString()

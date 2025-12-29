@@ -4,7 +4,7 @@
 
 import { scheduleData, appConfig } from './modules/data.js';
 import { calculateWeekCycles } from './modules/dateUtils.js';
-import { DOMCache, DOMUtils } from './modules/domUtils.js';
+import { DOMCache } from './modules/domUtils.js';
 import { ThemeManager } from './modules/themeManager.js';
 import { ScheduleRenderer } from './modules/scheduleRenderer.js';
 import { WashingScheduleManager } from './modules/washingScheduleManager.js';
@@ -226,6 +226,12 @@ class EscalasTabajaraApp {
    * Limpa recursos e para timers
    */
   destroy() {
+    if (this.washingManager) {
+      this.washingManager.destroy();
+    }
+    if (this.themeManager) {
+      this.themeManager.destroy();
+    }
     this.isInitialized = false;
     console.log('🧹 Aplicação destruída');
   }

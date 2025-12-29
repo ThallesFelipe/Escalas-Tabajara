@@ -5,25 +5,21 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
-    "@typescript-eslint/recommended"
+    "eslint:recommended"
   ],
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "plugins": [
-    "@typescript-eslint",
     "html"
   ],
   "rules": {
     "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-console": ["warn", { "allow": ["warn", "error", "info", "log"] }],
     "prefer-const": "error",
     "no-var": "error",
     "object-shorthand": "error",
@@ -31,6 +27,7 @@
   },
   "ignorePatterns": [
     "dist/**",
-    "node_modules/**"
+    "node_modules/**",
+    "**/*.d.ts"
   ]
 }

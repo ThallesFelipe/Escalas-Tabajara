@@ -34,7 +34,7 @@ export const getWeekDifference = (date1, date2) => {
 
   const msPerWeek = 1000 * 60 * 60 * 24 * 7;
 
-  // Alinha ambas as datas para a Segunda e Terça da semana
+  // Alinha ambas as datas para a segunda-feira da semana
   const getmonday_tuesday = (date) => {
     const d = new Date(date);
     const day = d.getDay();
@@ -51,9 +51,10 @@ export const getWeekDifference = (date1, date2) => {
 };
 
 /**
- * Encontra a data da Segunda e Terça da semana de uma data específica
+ * Encontra a data da segunda-feira da semana de uma data específica
+ * Para dias de domingo, retorna a segunda-feira da semana anterior
  * @param {Date} date - Data de referência
- * @returns {Date} Data da Segunda e Terça da mesma semana
+ * @returns {Date} Data da segunda-feira da mesma semana
  * @throws {Error} Se a data for inválida
  */
 export const getmonday_tuesdayDate = (date) => {
@@ -84,23 +85,18 @@ export const calculateWeekCycles = (currentDate, referenceDate, scheduleData) =>
     throw new Error('Datas inválidas fornecidas para cálculo de ciclos');
   }
 
-  let referenceDate2 = new Date(currentDate);
-
-  // Se for domingo, usar a próxima Segunda e Terça
-  if (currentDate.getDay() === 0) {
-    referenceDate2.setDate(currentDate.getDate() + 1);
-  }
-
-  const monday_tuesdayDate = getmonday_tuesdayDate(referenceDate2);
+  // Para domingo, considera a semana atual (que termina no domingo)
+  // Para outros dias, usa a semana corrente normalmente
+  const monday_tuesdayDate = getmonday_tuesdayDate(currentDate);
   const weekDiff = Math.max(0, getWeekDifference(monday_tuesdayDate, referenceDate));
 
   // Calcula os índices dos ciclos para cada dia
   const monday_tuesdayCycleIndex = weekDiff % (scheduleData.monday_tuesday?.length || 1);
   const thursday_fridayCycleIndex = weekDiff % (scheduleData.thursday_friday?.length || 1);
 
-  // Calcula a data da quinta e sexta
+  // Calcula a data da quinta-feira (segunda + 3 dias)
   const thursday_fridayDate = new Date(monday_tuesdayDate);
-  thursday_fridayDate.setDate(monday_tuesdayDate.getDate() + 4);
+  thursday_fridayDate.setDate(monday_tuesdayDate.getDate() + 3);
 
   return {
     monday_tuesdayDate,
@@ -133,8 +129,8 @@ export const isToday = (date) => {
  */
 export const getDayName = (dayIndex) => {
   const days = [
-    'Domingo', 'Segunda e Terça', 'Terça-feira', 'Quarta-feira',
-    'Quinta-feira', 'Quinta e Sexta', 'Sábado'
+    'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
+    'Quinta-feira', 'Sexta-feira', 'Sábado'
   ];
 
   return days[dayIndex] || 'Dia inválido';

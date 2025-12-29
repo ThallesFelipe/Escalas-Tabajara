@@ -102,7 +102,11 @@ describe('dateUtils', () => {
   describe('getDayName', () => {
     it('deve retornar nomes corretos dos dias', () => {
       expect(getDayName(0)).toBe('Domingo');
-      expect(getDayName(1)).toBe('Segunda e Terça');
+      expect(getDayName(1)).toBe('Segunda-feira');
+      expect(getDayName(2)).toBe('Terça-feira');
+      expect(getDayName(3)).toBe('Quarta-feira');
+      expect(getDayName(4)).toBe('Quinta-feira');
+      expect(getDayName(5)).toBe('Sexta-feira');
       expect(getDayName(6)).toBe('Sábado');
     });
 
@@ -171,27 +175,3 @@ describe('dateUtils', () => {
     });
   });
 });
-
-export const getWeekDifference = (date1, date2) => {
-  if (!(date1 instanceof Date) || isNaN(date1.getTime()) ||
-    !(date2 instanceof Date) || isNaN(date2.getTime())) {
-    throw new Error('Datas inválidas fornecidas para cálculo de diferença');
-  }
-
-  const msPerWeek = 1000 * 60 * 60 * 24 * 7;
-
-  // Alinha ambas as datas para a Segunda e Terça da semana
-  const getmonday_tuesday = (date) => {
-    const d = new Date(date);
-    const day = d.getDay();
-    const diff = (day === 0 ? -6 : 1 - day);
-    d.setDate(d.getDate() + diff);
-    d.setHours(0, 0, 0, 0);
-    return d;
-  };
-
-  const monday_tuesday1 = getmonday_tuesday(date1);
-  const monday_tuesday2 = getmonday_tuesday(date2);
-
-  return Math.floor((monday_tuesday1 - monday_tuesday2) / msPerWeek);
-};
