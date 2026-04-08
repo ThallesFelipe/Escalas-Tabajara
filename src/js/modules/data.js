@@ -32,7 +32,7 @@
  */
 const mondayTuesdayMembers = [
   'Rita',
-  'Viihtube',
+  'A. Viihtube',
   'A. Gustavo',
   'Smigou',
 ];
@@ -79,7 +79,7 @@ export const washingSchedule = [
   { day: 'Terça-feira', users: 'Navala e Gaga', dayIndex: 2 },
   { day: 'Quarta-feira', users: 'LATAM e B. Riquelme', dayIndex: 3 },
   { day: 'Quinta-feira', users: 'Rita', dayIndex: 4 },
-  { day: 'Sexta-feira', users: 'Viihtube', dayIndex: 5 },
+  { day: 'Sexta-feira', users: 'A. Viihtube', dayIndex: 5 },
   { day: 'Sábado', users: 'PANOS', dayIndex: 6 },
 ];
 
