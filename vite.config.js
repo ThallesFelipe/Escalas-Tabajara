@@ -10,8 +10,12 @@ export default defineConfig({
     minify: 'terser',
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['date-fns']
+        manualChunks(id) {
+          if (/node_modules[\\/]date-fns/.test(id)) {
+            return 'vendor';
+          }
+
+          return undefined;
         }
       }
     }
