@@ -31,10 +31,10 @@
  * 📝 Adicione ou remova nomes conforme necessário
  */
 const mondayTuesdayMembers = [
-  'Gaga',
-  'A. Viihtube',
-  'Smigou',
   'Rita',
+  'Viihtube',
+  'A. Gustavo',
+  'Smigou',
 ];
 
 /**
@@ -42,11 +42,11 @@ const mondayTuesdayMembers = [
  * 📝 Adicione ou remova nomes conforme necessário
  */
 const thursdayFridayMembers = [
-  'Navala',
   'LATAM',
-  'BBB',
-  'Leidi',
-  'Espalha Lixo',
+  'Gaga',
+  'Espalha',
+  'B. Riquelme',
+  'Navala',
 ];
 
 // ============================================================================
@@ -74,12 +74,12 @@ export const rooms = [
  * 📝 Edite os usuários de cada dia conforme necessário
  */
 export const washingSchedule = [
-  { day: 'Domingo', users: 'Espalha Lixo e Rita', dayIndex: 0 },
-  { day: 'Segunda-feira', users: 'Gaga e A. Rodrigo', dayIndex: 1 },
-  { day: 'Terça-feira', users: 'A. Viihtube', dayIndex: 2 },
-  { day: 'Quarta-feira', users: 'Navala e LATAM', dayIndex: 3 },
-  { day: 'Quinta-feira', users: 'BBB e Smigou', dayIndex: 4 },
-  { day: 'Sexta-feira', users: 'Leidi', dayIndex: 5 },
+  { day: 'Domingo', users: 'Espalha', dayIndex: 0 },
+  { day: 'Segunda-feira', users: 'Smigou e A. Gustavo', dayIndex: 1 },
+  { day: 'Terça-feira', users: 'Navala e Gaga', dayIndex: 2 },
+  { day: 'Quarta-feira', users: 'LATAM e B. Riquelme', dayIndex: 3 },
+  { day: 'Quinta-feira', users: 'Rita', dayIndex: 4 },
+  { day: 'Sexta-feira', users: 'Viihtube', dayIndex: 5 },
   { day: 'Sábado', users: 'PANOS', dayIndex: 6 },
 ];
 
