@@ -1,14 +1,14 @@
 {
   "name": "escalas-tabajara",
   "version": "2.0.0",
-  "description": "Sistema de escalas de limpeza e lavanderia da República Tabajara",
+  "description": "Escalas semanais de limpeza e da máquina de lavar da República Tabajara.",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,ts,html --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --ext js,ts,html --fix",
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest",
@@ -33,12 +33,8 @@
     "eslint-plugin-html": "^8.1.4",
     "jsdom": "^29.0.2",
     "prettier": "^3.8.1",
-    "terser": "^5.46.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.7",
     "vitest": "^4.1.3"
-  },
-  "dependencies": {
-    "date-fns": "^4.1.0"
   }
 }

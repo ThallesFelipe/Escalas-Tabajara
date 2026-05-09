@@ -14,7 +14,7 @@
 
     --color-text-main: #2D2825;
     --color-text-secondary: #5C534D;
-    --color-text-muted: #968C85;
+    --color-text-muted: #7A7068;
     --color-text-on-primary: #FFFFFF;
 
     --color-primary: #E86A5C;
@@ -43,7 +43,6 @@
     /* --- Tipografia --- */
     --font-heading: 'Libre Baskerville', Georgia, serif;
     --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
     --font-weight-regular: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
@@ -149,6 +148,28 @@ button {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+.skip-to-content:focus-visible {
+    position: fixed;
+    top: var(--space-md);
+    left: var(--space-md);
+    width: auto;
+    height: auto;
+    padding: var(--space-sm) var(--space-lg);
+    clip: auto;
+    overflow: visible;
+    background: var(--color-primary);
+    color: var(--color-text-on-primary);
+    border-radius: var(--radius-pill);
+    font-weight: var(--font-weight-bold);
+    z-index: 999;
 }
 
 /* --- Material Symbols --- */
@@ -340,8 +361,7 @@ button {
     color: var(--color-primary);
 }
 
-.room span.room-name,
-.room-name {
+.room .room-name {
     font-weight: var(--font-weight-medium);
     font-size: 0.9375rem;
     display: flex;
@@ -350,8 +370,7 @@ button {
     color: var(--color-text-main);
 }
 
-.room span.responsible,
-.responsible {
+.room .responsible {
     font-weight: var(--font-weight-bold);
     color: var(--color-primary);
     background-color: var(--color-primary-surface);
@@ -532,8 +551,7 @@ tbody tr.current-day td:last-child {
         transform: none;
     }
 
-    .room span.responsible,
-    .responsible {
+    .room .responsible {
         padding: 5px 10px;
         font-size: 0.75rem;
     }
@@ -582,8 +600,7 @@ tbody tr.current-day td:last-child {
         border-radius: var(--radius-md);
     }
 
-    .room span.responsible,
-    .responsible {
+    .room .responsible {
         align-self: flex-end;
     }
 

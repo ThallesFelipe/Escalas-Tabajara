@@ -1,154 +1,76 @@
 /**
- * @fileoverview Utilitários para manipulação de datas e cálculos de escala
+ * Utilitários de data centrados em semanas que começam na segunda-feira.
  */
 
+const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
+
 /**
- * Formata uma data no formato DD/MM para exibição
- * @param {Date} date - Data a ser formatada
- * @returns {string} Data formatada no padrão brasileiro
- * @throws {Error} Se a data for inválida
+ * @param {unknown} date
+ * @param {string} [name]
+ * @returns {asserts date is Date}
+ */
+const assertDate = (date, name = 'data') => {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+    throw new Error(`${name} inválida`);
+  }
+};
+
+/**
+ * Formata uma data como `DD/MM` no padrão pt-BR.
+ * @param {Date} date
+ * @returns {string}
  */
 export const formatDate = (date) => {
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
-    throw new Error('Data inválida fornecida para formatação');
-  }
-
-  return date.toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: '2-digit'
-  });
+  assertDate(date);
+  return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 };
 
 /**
- * Calcula a diferença de semanas completas entre duas datas
- * @param {Date} date1 - Data mais recente
- * @param {Date} date2 - Data de referência
- * @returns {number} Número de semanas de diferença
- * @throws {Error} Se alguma das datas for inválida
+ * Retorna a segunda-feira da semana de `date`. Domingo é tratado como o
+ * último dia da semana anterior.
+ * @param {Date} date
+ * @returns {Date}
  */
-export const getWeekDifference = (date1, date2) => {
-  if (!(date1 instanceof Date) || isNaN(date1.getTime()) ||
-    !(date2 instanceof Date) || isNaN(date2.getTime())) {
-    throw new Error('Datas inválidas fornecidas para cálculo de diferença');
-  }
-
-  const msPerWeek = 1000 * 60 * 60 * 24 * 7;
-
-  // Alinha ambas as datas para a segunda-feira da semana
-  const getmonday_tuesday = (date) => {
-    const d = new Date(date);
-    const day = d.getDay();
-    const diff = (day === 0 ? -6 : 1 - day);
-    d.setDate(d.getDate() + diff);
-    d.setHours(0, 0, 0, 0);
-    return d;
-  };
-
-  const monday_tuesday1 = getmonday_tuesday(date1);
-  const monday_tuesday2 = getmonday_tuesday(date2);
-
-  return Math.floor((monday_tuesday1 - monday_tuesday2) / msPerWeek);
+export const startOfWeek = (date) => {
+  assertDate(date);
+  const day = date.getDay();
+  const offset = day === 0 ? -6 : 1 - day;
+  const monday = new Date(date);
+  monday.setDate(date.getDate() + offset);
+  monday.setHours(0, 0, 0, 0);
+  return monday;
 };
 
 /**
- * Encontra a data da segunda-feira da semana de uma data específica
- * Para dias de domingo, retorna a segunda-feira da semana anterior
- * @param {Date} date - Data de referência
- * @returns {Date} Data da segunda-feira da mesma semana
- * @throws {Error} Se a data for inválida
+ * Diferença em semanas completas entre duas datas, sempre comparando suas
+ * respectivas segundas-feiras.
+ * @param {Date} a
+ * @param {Date} b
+ * @returns {number}
  */
-export const getmonday_tuesdayDate = (date) => {
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
-    throw new Error('Data inválida fornecida para encontrar Segunda e Terça');
-  }
-
-  const currentDay = date.getDay();
-  const diffTomonday_tuesday = (currentDay === 0 ? -6 : 1 - currentDay);
-  const monday_tuesdayDate = new Date(date);
-
-  monday_tuesdayDate.setDate(date.getDate() + diffTomonday_tuesday);
-  monday_tuesdayDate.setHours(0, 0, 0, 0);
-
-  return monday_tuesdayDate;
+export const weeksBetween = (a, b) => {
+  assertDate(a, 'data inicial');
+  assertDate(b, 'data final');
+  return Math.floor((startOfWeek(a).getTime() - startOfWeek(b).getTime()) / MS_PER_WEEK);
 };
 
 /**
- * Calcula as datas e índices dos ciclos para uma semana específica
- * @param {Date} currentDate - Data atual para cálculo
- * @param {Date} referenceDate - Data de referência do sistema
- * @param {Object} scheduleData - Dados da escala
- * @returns {Object} Objeto com datas e índices calculados
+ * Para um instante qualquer, calcula as datas e os índices de rotação das
+ * duas duplas (segunda/terça e quinta/sexta) a partir de uma data de referência.
+ *
+ * @param {Date} today
+ * @param {Date} referenceDate
+ * @param {import('../types').ScheduleData} scheduleData
+ * @returns {import('../types').WeekCycle}
  */
-export const calculateWeekCycles = (currentDate, referenceDate, scheduleData) => {
-  if (!(currentDate instanceof Date) || isNaN(currentDate.getTime()) ||
-    !(referenceDate instanceof Date) || isNaN(referenceDate.getTime())) {
-    throw new Error('Datas inválidas fornecidas para cálculo de ciclos');
-  }
+export const calculateWeekCycles = (today, referenceDate, scheduleData) => {
+  const monTueDate = startOfWeek(today);
+  const thuFriDate = new Date(monTueDate);
+  thuFriDate.setDate(monTueDate.getDate() + 3);
 
-  // Para domingo, considera a semana atual (que termina no domingo)
-  // Para outros dias, usa a semana corrente normalmente
-  const monday_tuesdayDate = getmonday_tuesdayDate(currentDate);
-  const weekDiff = Math.max(0, getWeekDifference(monday_tuesdayDate, referenceDate));
+  const weekDiff = Math.max(0, weeksBetween(monTueDate, referenceDate));
+  const monTueCycleIndex = weekDiff % (scheduleData.monTue?.length || 1);
+  const thuFriCycleIndex = weekDiff % (scheduleData.thuFri?.length || 1);
 
-  // Calcula os índices dos ciclos para cada dia
-  const monday_tuesdayCycleIndex = weekDiff % (scheduleData.monday_tuesday?.length || 1);
-  const thursday_fridayCycleIndex = weekDiff % (scheduleData.thursday_friday?.length || 1);
-
-  // Calcula a data da quinta-feira (segunda + 3 dias)
-  const thursday_fridayDate = new Date(monday_tuesdayDate);
-  thursday_fridayDate.setDate(monday_tuesdayDate.getDate() + 3);
-
-  return {
-    monday_tuesdayDate,
-    thursday_fridayDate,
-    monday_tuesdayCycleIndex,
-    thursday_fridayCycleIndex
-  };
-};
-
-/**
- * Verifica se uma data é hoje
- * @param {Date} date - Data a ser verificada
- * @returns {boolean} True se a data for hoje
- */
-export const isToday = (date) => {
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
-    return false;
-  }
-
-  const today = new Date();
-  return date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() === today.getFullYear();
-};
-
-/**
- * Obtém o nome do dia da semana em português
- * @param {number} dayIndex - Índice do dia (0 = domingo)
- * @returns {string} Nome do dia da semana
- */
-export const getDayName = (dayIndex) => {
-  const days = [
-    'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira',
-    'Quinta-feira', 'Sexta-feira', 'Sábado'
-  ];
-
-  return days[dayIndex] || 'Dia inválido';
-};
-
-/**
- * Valida se uma data está dentro de um intervalo razoável
- * @param {Date} date - Data a ser validada
- * @param {number} yearsRange - Range de anos permitido (padrão: 10)
- * @returns {boolean} True se a data for válida
- */
-export const isValidDateRange = (date, yearsRange = 10) => {
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
-    return false;
-  }
-
-  const currentYear = new Date().getFullYear();
-  const dateYear = date.getFullYear();
-
-  return Math.abs(dateYear - currentYear) <= yearsRange;
+  return { monTueDate, thuFriDate, monTueCycleIndex, thuFriCycleIndex };
 };

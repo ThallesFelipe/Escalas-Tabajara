@@ -1,36 +1,9 @@
 /**
- * @fileoverview Dados da escala de limpeza e configurações da República Tabajara
- * 
- * ╔════════════════════════════════════════════════════════════════════════════╗
- * ║                    COMO ATUALIZAR AS ESCALAS                               ║
- * ╠════════════════════════════════════════════════════════════════════════════╣
- * ║                                                                            ║
- * ║  1. ADICIONAR MORADOR:                                                     ║
- * ║     - Adicione o nome na lista correspondente (seg/ter ou qui/sex)         ║
- * ║     - Ex: members: ['Fulano', 'Ciclano', 'NOVO_MORADOR']                   ║
- * ║                                                                            ║
- * ║  2. REMOVER MORADOR:                                                       ║
- * ║     - Simplesmente remova o nome da lista                                  ║
- * ║     - O sistema recalcula tudo automaticamente!                            ║
- * ║                                                                            ║
- * ║  3. TROCAR ORDEM:                                                          ║
- * ║     - Reordene os nomes na lista como preferir                             ║
- * ║                                                                            ║
- * ║  4. MÁQUINA DE LAVAR:                                                      ║
- * ║     - Edite o array washingSchedule abaixo                                 ║
- * ║                                                                            ║
- * ╚════════════════════════════════════════════════════════════════════════════╝
+ * Configuração das escalas. Para atualizar moradores ou a tabela da máquina de
+ * lavar, basta editar os arrays abaixo — a rotação é regenerada automaticamente.
  */
 
-// ============================================================================
-// 🏠 MORADORES - EDITE AQUI!
-// ============================================================================
-
-/**
- * Grupo de Segunda e Terça
- * 📝 Adicione ou remova nomes conforme necessário
- */
-const mondayTuesdayMembers = [
+const monTueMembers = [
   'Rita',
   'A. Viihtube',
   'A. Gustavo',
@@ -38,11 +11,7 @@ const mondayTuesdayMembers = [
   'I. Oliver',
 ];
 
-/**
- * Grupo de Quinta e Sexta
- * 📝 Adicione ou remova nomes conforme necessário
- */
-const thursdayFridayMembers = [
+const thuFriMembers = [
   'LATAM',
   'Gaga',
   'Espalha',
@@ -50,128 +19,48 @@ const thursdayFridayMembers = [
   'Navala',
 ];
 
-// ============================================================================
-// 🧹 CÔMODOS - EDITE AQUI SE PRECISAR MUDAR OS AMBIENTES
-// ============================================================================
-
-/**
- * Definição dos cômodos com seus labels e chaves correspondentes
- * 📝 Adicione ou remova cômodos conforme a estrutura da república
- */
+/** @type {import('../types').Room[]} */
 export const rooms = [
-  { label: 'Cozinha', key: 'cozinha', icon: 'restaurant' },
-  { label: 'Banheiro de baixo', key: 'banhBaixo', icon: 'shower' },
-  { label: 'Banheiro suíte', key: 'banhSuite', icon: 'bathtub' },
-  { label: 'Sala e corredor', key: 'sala', icon: 'weekend' },
-  { label: 'Lavabo', key: 'lavabo', icon: 'wash' },
+  { label: 'Cozinha',           key: 'cozinha',   icon: 'restaurant' },
+  { label: 'Banheiro de baixo', key: 'banhBaixo', icon: 'shower'     },
+  { label: 'Banheiro suíte',    key: 'banhSuite', icon: 'bathtub'    },
+  { label: 'Sala e corredor',   key: 'sala',      icon: 'weekend'    },
+  { label: 'Lavabo',            key: 'lavabo',    icon: 'wash'       },
 ];
 
-// ============================================================================
-// 🧺 MÁQUINA DE LAVAR - EDITE AQUI!
-// ============================================================================
-
-/**
- * Escala da máquina de lavar por dia da semana
- * 📝 Edite os usuários de cada dia conforme necessário
- */
+/** @type {import('../types').WashingDay[]} */
 export const washingSchedule = [
-  { day: 'Domingo', users: 'Espalha', dayIndex: 0 },
-  { day: 'Segunda-feira', users: 'Smigou e A. Gustavo', dayIndex: 1 },
-  { day: 'Terça-feira', users: 'Navala e Gaga', dayIndex: 2 },
-  { day: 'Quarta-feira', users: 'LATAM e B. Riquelme', dayIndex: 3 },
-  { day: 'Quinta-feira', users: 'Rita e I. Oliver', dayIndex: 4 },
-  { day: 'Sexta-feira', users: 'A. Viihtube', dayIndex: 5 },
-  { day: 'Sábado', users: 'PANOS', dayIndex: 6 },
+  { dayIndex: 0, day: 'Domingo',       users: 'Espalha'             },
+  { dayIndex: 1, day: 'Segunda-feira', users: 'Smigou e A. Gustavo' },
+  { dayIndex: 2, day: 'Terça-feira',   users: 'Navala e Gaga'       },
+  { dayIndex: 3, day: 'Quarta-feira',  users: 'LATAM e B. Riquelme' },
+  { dayIndex: 4, day: 'Quinta-feira',  users: 'Rita e I. Oliver'    },
+  { dayIndex: 5, day: 'Sexta-feira',   users: 'A. Viihtube'         },
+  { dayIndex: 6, day: 'Sábado',        users: 'PANOS'               },
 ];
 
-// ============================================================================
-// ⚙️ CONFIGURAÇÕES DO SISTEMA - NÃO PRECISA MEXER
-// ============================================================================
+// Segunda, 8 de dezembro de 2025 — origem do ciclo semanal.
+export const REFERENCE_DATE = new Date(2025, 11, 8);
 
 /**
- * Configurações da aplicação
+ * Rotação circular: a cada semana, todo morador avança um cômodo. Quando há
+ * menos moradores que cômodos, a sala assume também o lavabo.
+ *
+ * @param {string[]} members
+ * @returns {import('../types').Rotation[]}
  */
-export const appConfig = {
-  /** Data de referência para o início do ciclo (Segunda, 8 de dezembro de 2025) */
-  referenceDate: new Date(2025, 11, 8),
-  /** Chave para salvar preferência de tema no localStorage */
-  themeStorageKey: 'escalas-tabajara-theme',
-  /** Classe CSS para modo escuro */
-  darkModeClass: 'dark-mode',
-};
-
-/**
- * Configuração de temas
- */
-export const themeConfig = {
-  lightIcon: 'light_mode',
-  darkIcon: 'dark_mode',
-  lightLabel: 'Alternar para modo escuro',
-  darkLabel: 'Alternar para modo claro',
-};
-
-// ============================================================================
-// 🔄 GERADOR AUTOMÁTICO DE ESCALAS - NÃO PRECISA MEXER
-// ============================================================================
-
-/**
- * Gera automaticamente todas as rotações da escala de limpeza
- * baseado na lista de moradores.
- * 
- * Regras:
- * - Cada pessoa limpa um cômodo diferente por semana
- * - Se há menos pessoas que cômodos, quem limpa a sala também limpa o lavabo
- * - A rotação é circular (após a última posição, volta para a primeira)
- * 
- * @param {string[]} members - Lista de moradores do grupo
- * @returns {Object[]} Array de rotações com as atribuições de cada cômodo
- */
-function generateScheduleRotations(members) {
-  const numMembers = members.length;
-  const numRooms = rooms.length;
-  const rotations = [];
-
-  // Gera uma rotação para cada membro (ciclo completo)
-  for (let rotation = 0; rotation < numMembers; rotation++) {
-    const schedule = {};
-
-    rooms.forEach((room, roomIndex) => {
-      // Calcula qual membro fica responsável por este cômodo nesta rotação
-      const memberIndex = (roomIndex + rotation) % numMembers;
-      schedule[room.key] = members[memberIndex];
-    });
-
-    // Se há menos pessoas que cômodos, quem limpa a sala também limpa o lavabo
-    if (numMembers < numRooms) {
-      schedule.lavabo = schedule.sala;
-    }
-
-    rotations.push(schedule);
-  }
-
-  return rotations;
+function buildRotations(members) {
+  return members.map((_member, week) => {
+    const rotation = Object.fromEntries(
+      rooms.map((room, i) => [room.key, members[(i + week) % members.length]]),
+    );
+    if (members.length < rooms.length) rotation['lavabo'] = rotation['sala'];
+    return /** @type {import('../types').Rotation} */ (rotation);
+  });
 }
 
-/**
- * Dados da escala de limpeza - GERADO AUTOMATICAMENTE
- * Não precisa editar manualmente! Apenas modifique as listas de moradores acima.
- */
+/** @type {import('../types').ScheduleData} */
 export const scheduleData = {
-  monday_tuesday: generateScheduleRotations(mondayTuesdayMembers),
-  thursday_friday: generateScheduleRotations(thursdayFridayMembers),
+  monTue: buildRotations(monTueMembers),
+  thuFri: buildRotations(thuFriMembers),
 };
-
-// ============================================================================
-// 📊 INFORMAÇÕES ÚTEIS (para debug/verificação)
-// ============================================================================
-
-/**
- * Exibe informações sobre a configuração atual no console (apenas em desenvolvimento)
- */
-if (typeof window !== 'undefined' && window.location?.hostname === 'localhost') {
-  console.info('📋 Escalas Tabajara - Configuração atual:');
-  console.info(`   Segunda/Terça: ${mondayTuesdayMembers.length} pessoas → ${scheduleData.monday_tuesday.length} rotações`);
-  console.info(`   Quinta/Sexta: ${thursdayFridayMembers.length} pessoas → ${scheduleData.thursday_friday.length} rotações`);
-  console.info('   Moradores Seg/Ter:', mondayTuesdayMembers.join(', '));
-  console.info('   Moradores Qui/Sex:', thursdayFridayMembers.join(', '));
-}

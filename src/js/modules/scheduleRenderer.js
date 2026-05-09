@@ -1,316 +1,129 @@
-/**
- * @fileoverview Renderização da escala de limpeza
- */
-
 import { rooms } from './data.js';
 import { formatDate } from './dateUtils.js';
+import { el } from './domUtils.js';
 
-/**
- * Renderizador da escala de limpeza
- */
+/** @type {Record<number, string | undefined>} */
+const COLUMN_BY_WEEKDAY = {
+  1: 'cleaning-mon-tue',
+  2: 'cleaning-mon-tue',
+  4: 'cleaning-thu-fri',
+  5: 'cleaning-thu-fri',
+};
+
 export class ScheduleRenderer {
-  /**
-   * @param {Object} domCache - Cache de elementos DOM
-   */
-  constructor(domCache) {
-    this.domCache = domCache;
+  /** @param {import('../types').AppElements} elements */
+  constructor({ schedule }) {
+    this.container = schedule;
   }
 
   /**
-   * Renderiza toda a escala de limpeza
-   * @param {Object} cycleData - Dados calculados dos ciclos
-   * @param {Object} scheduleData - Dados da escala
+   * @param {import('../types').WeekCycle} cycle
+   * @param {import('../types').ScheduleData} scheduleData
    */
-  renderSchedule(cycleData, scheduleData) {
-    const container = this.domCache.get('scheduleContainer');
+  render(cycle, scheduleData) {
+    if (!this.container) return;
 
-    if (!container) {
-      console.error('Container da escala não encontrado');
-      return;
-    }
-
-    // Limpa o container
-    this.clearElement(container);
-
-    try {
-      // Cria as colunas para cada dia
-      const monday_tuesdayColumn = this.createScheduleColumn(
-        'monday_tuesday',
+    this.container.replaceChildren(
+      this.#column(
+        'cleaning-mon-tue',
         'Segunda e Terça',
-        scheduleData.monday_tuesday?.[cycleData.monday_tuesdayCycleIndex],
-        cycleData.monday_tuesdayDate
-      );
-
-      const thursday_fridayColumn = this.createScheduleColumn(
-        'thursday_friday',
+        scheduleData.monTue?.[cycle.monTueCycleIndex],
+        cycle.monTueDate,
+      ),
+      this.#column(
+        'cleaning-thu-fri',
         'Quinta e Sexta',
-        scheduleData.thursday_friday?.[cycleData.thursday_fridayCycleIndex],
-        cycleData.thursday_fridayDate
-      );
+        scheduleData.thuFri?.[cycle.thuFriCycleIndex],
+        cycle.thuFriDate,
+      ),
+    );
+    this.highlightToday();
+  }
 
-      // Adiciona as colunas ao container
-      container.appendChild(monday_tuesdayColumn);
-      container.appendChild(thursday_fridayColumn);
-
-      // Destaca o dia atual
-      this.highlightCurrentDay(cycleData);
-
-    } catch (error) {
-      console.error('Erro ao renderizar escala:', error);
-      this.renderErrorMessage(container);
+  highlightToday() {
+    if (!this.container) return;
+    const activeId = COLUMN_BY_WEEKDAY[new Date().getDay()];
+    for (const column of this.container.querySelectorAll('.column')) {
+      column.classList.toggle('current-day', column.id === activeId);
     }
   }
 
   /**
-   * Cria uma coluna da escala
-   * @param {string} id - ID da coluna
-   * @param {string} dayName - Nome do dia
-   * @param {import('../types/index.js').DailyScheduleItem} schedule - Escala do dia
-   * @param {Date} cleaningDate - Data da limpeza
-   * @returns {HTMLElement} Elemento da coluna
+   * @param {string} id
+   * @param {string} label
+   * @param {import('../types').Rotation | undefined} rotation
+   * @param {Date} startDate
    */
-  createScheduleColumn(id, dayName, schedule, cleaningDate) {
-    if (!schedule) {
-      console.warn(`Escala não encontrada para ${dayName}`);
-      return this.createEmptyColumn(id, dayName, cleaningDate);
-    }
+  #column(id, label, rotation, startDate) {
+    const headerId = `${id}-header`;
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 1);
+    const dateRange = `${formatDate(startDate)} – ${formatDate(endDate)}`;
 
-    const column = this.createElement('div', {
+    const header = el('header', {
+      className: 'column-header',
+      children: [
+        el('h3', { id: headerId, className: 'day-title', text: label }),
+        el('span', {
+          className: 'date-display',
+          text: dateRange,
+          attrs: { 'aria-label': `Datas: ${dateRange}` },
+        }),
+      ],
+    });
+
+    const body = rotation
+      ? el('div', {
+          className: 'rooms-list',
+          attrs: {
+            role: 'list',
+            'aria-label': `Responsáveis pela limpeza de ${label}`,
+          },
+          children: rooms.map((room) => this.#room(room, rotation)),
+        })
+      : el('p', {
+          className: 'empty-message',
+          text: 'Escala não disponível.',
+        });
+
+    return el('div', {
       id,
-      className: 'column',
-      attributes: {
-        'role': 'region',
-        'aria-labelledby': `${id}-header`
-      }
+      className: rotation ? 'column' : 'column column-empty',
+      attrs: { role: 'region', 'aria-labelledby': headerId },
+      children: [header, body],
     });
-
-    // Cabeçalho da coluna
-    const header = this.createColumnHeader(id, dayName, cleaningDate);
-    column.appendChild(header);
-
-    // Lista de cômodos
-    const roomsList = this.createElement('div', {
-      className: 'rooms-list',
-      attributes: {
-        'role': 'list',
-        'aria-label': `Responsáveis pela limpeza de ${dayName}`
-      }
-    });
-
-    rooms.forEach(room => {
-      const roomElement = this.createRoomElement(room, schedule);
-      roomsList.appendChild(roomElement);
-    });
-
-    column.appendChild(roomsList);
-    return column;
   }
 
   /**
-   * Cria o cabeçalho de uma coluna
-   * @param {string} id - ID da coluna
-   * @param {string} dayName - Nome do dia
-   * @param {Date} date - Data inicial
-   * @returns {HTMLElement} Elemento do cabeçalho
+   * @param {import('../types').Room} room
+   * @param {import('../types').Rotation} rotation
    */
-  createColumnHeader(id, dayName, date) {
-    const header = this.createElement('header', {
-      className: 'column-header'
-    });
-
-    const title = this.createElement('h3', {
-      textContent: dayName,
-      id: `${id}-header`,
-      className: 'day-title'
-    });
-
-    // Calcula a data final (dia seguinte) para exibir o range
-    const endDate = new Date(date);
-    endDate.setDate(date.getDate() + 1);
-    
-    const dateRangeText = `${formatDate(date)} - ${formatDate(endDate)}`;
-
-    const dateSpan = this.createElement('span', {
-      textContent: dateRangeText,
-      className: 'date-display',
-      attributes: {
-        'aria-label': `Datas: ${dateRangeText}`
-      }
-    });
-
-    header.appendChild(title);
-    header.appendChild(dateSpan);
-    return header;
-  }
-
-  /**
-   * Cria um elemento de cômodo
-   * @param {import('../types/index.js').Room} room - Dados do cômodo
-   * @param {import('../types/index.js').DailyScheduleItem} schedule - Escala do dia
-   * @returns {HTMLElement} Elemento do cômodo
-   */
-  createRoomElement(room, schedule) {
-    const responsible = schedule[room.key] || 'Não definido';
-
-    const roomElement = this.createElement('div', {
+  #room(room, rotation) {
+    const responsible = rotation[room.key] ?? '—';
+    return el('div', {
       className: 'room',
-      attributes: {
-        'role': 'listitem',
-        'aria-label': `${room.label}: ${responsible}`
-      }
+      attrs: {
+        role: 'listitem',
+        'aria-label': `${room.label}: ${responsible}`,
+      },
+      children: [
+        el('div', {
+          className: 'room-info',
+          children: [
+            el('span', {
+              className: 'material-symbols-rounded room-icon',
+              text: room.icon,
+              attrs: { 'aria-hidden': 'true' },
+            }),
+            el('span', { className: 'room-name', text: room.label }),
+          ],
+        }),
+        el('span', {
+          className: 'responsible',
+          text: responsible,
+          attrs: { title: `Responsável: ${responsible}` },
+        }),
+      ],
     });
-
-    // Container para ícone e nome do cômodo
-    const roomInfo = this.createElement('div', {
-      className: 'room-info'
-    });
-
-    // Ícone Material Symbol
-    const icon = this.createElement('span', {
-      className: 'material-symbols-rounded room-icon',
-      textContent: room.icon || 'home',
-      attributes: {
-        'aria-hidden': 'true'
-      }
-    });
-
-    const roomName = this.createElement('span', {
-      className: 'room-name',
-      textContent: room.label,
-      attributes: {
-        'aria-hidden': 'true'
-      }
-    });
-
-    roomInfo.appendChild(icon);
-    roomInfo.appendChild(roomName);
-
-    const responsibleSpan = this.createElement('span', {
-      className: 'responsible',
-      textContent: responsible,
-      attributes: {
-        'title': `Responsável: ${responsible}`
-      }
-    });
-
-    roomElement.appendChild(roomInfo);
-    roomElement.appendChild(responsibleSpan);
-    return roomElement;
-  }
-
-  /**
-   * Cria uma coluna vazia para casos de erro
-   * @param {string} id - ID da coluna
-   * @param {string} dayName - Nome do dia
-   * @param {Date} date - Data
-   * @returns {HTMLElement} Elemento da coluna vazia
-   */
-  createEmptyColumn(id, dayName, date) {
-    const column = this.createElement('div', {
-      id,
-      className: 'column column-empty'
-    });
-
-    const header = this.createColumnHeader(id, dayName, date);
-    column.appendChild(header);
-
-    const message = this.createElement('p', {
-      textContent: 'Escala não disponível para este dia',
-      className: 'empty-message'
-    });
-
-    column.appendChild(message);
-    return column;
-  }
-
-  /**
-   * Destaca o dia atual
-   * @param {import('../types/index.js').CycleCalculation} _cycleData - Dados dos ciclos (não utilizado atualmente)
-   */
-  highlightCurrentDay(_cycleData) {
-    const today = new Date();
-    const todayWeekDay = today.getDay();
-
-    // Remove destaques anteriores
-    document.querySelectorAll('.column.current-day').forEach(col => {
-      col.classList.remove('current-day');
-    });
-
-    // Destaca o dia atual
-    // Segunda (1) ou Terça (2) - destaca a coluna de Segunda e Terça
-    if (todayWeekDay === 1 || todayWeekDay === 2) {
-      document.getElementById('monday_tuesday')?.classList.add('current-day');
-    }
-    // Quinta (4) ou Sexta (5) - destaca a coluna de Quinta e Sexta
-    else if (todayWeekDay === 4 || todayWeekDay === 5) {
-      document.getElementById('thursday_friday')?.classList.add('current-day');
-    }
-  }
-
-  /**
-   * Renderiza uma mensagem de erro
-   * @param {HTMLElement} container - Container para a mensagem
-   */
-  renderErrorMessage(container) {
-    this.clearElement(container);
-
-    const errorElement = this.createElement('div', {
-      className: 'error-message',
-      innerHTML: `
-        <h3>❌ Erro ao carregar escala</h3>
-        <p>Não foi possível carregar a escala de limpeza. Tente recarregar a página.</p>
-        <button onclick="location.reload()" class="reload-button">
-          🔄 Recarregar página
-        </button>
-      `
-    });
-
-    container.appendChild(errorElement);
-  }
-
-  /**
-   * Atualiza apenas o destaque do dia atual sem re-renderizar toda a escala
-   */
-  updateCurrentDayHighlight() {
-    // Busca os dados atuais do cache/estado se disponível
-    // Por enquanto, apenas remove e não re-adiciona até ter os dados corretos
-    document.querySelectorAll('.column.current-day').forEach(col => {
-      col.classList.remove('current-day');
-    });
-  }
-
-  /**
-   * Utilitário para criar elementos DOM
-   * @param {string} tagName - Nome da tag
-   * @param {Object} options - Opções do elemento
-   * @returns {HTMLElement} Elemento criado
-   */
-  createElement(tagName, options = {}) {
-    const element = document.createElement(tagName);
-
-    if (options.id) element.id = options.id;
-    if (options.className) element.className = options.className;
-    if (options.textContent) element.textContent = options.textContent;
-    if (options.innerHTML) element.innerHTML = options.innerHTML;
-
-    if (options.attributes) {
-      Object.entries(options.attributes).forEach(([key, value]) => {
-        element.setAttribute(key, value);
-      });
-    }
-
-    return element;
-  }
-
-  /**
-   * Limpa todos os filhos de um elemento
-   * @param {HTMLElement} element - Elemento a ser limpo
-   */
-  clearElement(element) {
-    if (element && element.children) {
-      while (element.firstChild) {
-        element.removeChild(element.firstChild);
-      }
-    }
   }
 }

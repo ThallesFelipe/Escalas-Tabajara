@@ -1,186 +1,52 @@
 /**
- * @fileoverview Gerenciamento de DOM e cache de elementos
+ * Helpers mínimos para criação e localização de elementos no DOM.
  */
 
 /**
- * Cache de seletores DOM para otimizar performance
- * Evita consultas repetitivas ao DOM
+ * Resolve, uma única vez, todas as referências de DOM que a aplicação precisa.
+ * Sempre que um elemento for opcional, o consumidor deve checar antes de usar.
+ *
+ * @returns {import('../types').AppElements}
  */
-export class DOMCache {
-  constructor() {
-    this.cache = new Map();
-    this.initializeCache();
-  }
-
-  /**
-   * Inicializa o cache com os elementos principais
-   * @private
-   */
-  initializeCache() {
-    const selectors = {
-      scheduleContainer: '#cleaningSchedule',
-      washingTableBody: '#washingTableBody',
-      themeToggle: '#themeToggle',
-      themeIcon: '#themeIcon',
-      footerYear: '#currentYear'
-    };
-
-    for (const [key, selector] of Object.entries(selectors)) {
-      this.cache.set(key, document.querySelector(selector));
-    }
-  }
-
-  /**
-   * Obtém um elemento do cache
-   * @param {string} key - Chave do elemento
-   * @returns {HTMLElement|null} Elemento do DOM ou null se não encontrado
-   */
-  get(key) {
-    return this.cache.get(key);
-  }
-
-  /**
-   * Adiciona um elemento ao cache
-   * @param {string} key - Chave para identificar o elemento
-   * @param {HTMLElement} element - Elemento do DOM
-   */
-  set(key, element) {
-    this.cache.set(key, element);
-  }
-
-  /**
-   * Verifica se todos os elementos essenciais estão disponíveis
-   * @returns {boolean} True se todos os elementos essenciais existem
-   */
-  validateEssentialElements() {
-    const essential = ['scheduleContainer', 'themeToggle', 'themeIcon'];
-    return essential.every(key => this.get(key) !== null);
-  }
-
-  /**
-   * Limpa o cache e reinicializa
-   */
-  refresh() {
-    this.cache.clear();
-    this.initializeCache();
-  }
-}
+export const queryAppElements = () => ({
+  schedule:    document.getElementById('cleaningSchedule'),
+  washing:     document.getElementById('washingTableBody'),
+  themeToggle: document.getElementById('themeToggle'),
+  themeIcon:   document.getElementById('themeIcon'),
+  footerYear:  document.getElementById('currentYear'),
+});
 
 /**
- * Utilitários para manipulação do DOM
+ * Cria um elemento HTML configurado em uma única chamada.
+ *
+ * @template {keyof HTMLElementTagNameMap} K
+ * @param {K} tag
+ * @param {{
+ *   id?: string,
+ *   className?: string,
+ *   text?: string | null,
+ *   html?: string | null,
+ *   attrs?: Record<string, string>,
+ *   children?: (Node | null | undefined | false)[],
+ * }} [options]
+ * @returns {HTMLElementTagNameMap[K]}
  */
-export class DOMUtils {
-  /**
-   * Cria um elemento com classes e atributos
-   * @param {string} tag - Tag do elemento
-   * @param {Object} options - Opções do elemento
-   * @param {string[]} options.classes - Classes CSS
-   * @param {Object} options.attributes - Atributos do elemento
-   * @param {string} options.textContent - Conteúdo de texto
-   * @param {string} options.innerHTML - Conteúdo HTML
-   * @returns {HTMLElement} Elemento criado
-   */
-  static createElement(tag, options = {}) {
-    const element = document.createElement(tag);
+export const el = (tag, options = {}) => {
+  const node = document.createElement(tag);
+  const { id, className, text, html, attrs, children } = options;
 
-    if (options.classes) {
-      element.classList.add(...options.classes);
-    }
+  if (id) node.id = id;
+  if (className) node.className = className;
+  if (text != null) node.textContent = text;
+  else if (html != null) node.innerHTML = html;
 
-    if (options.attributes) {
-      for (const [key, value] of Object.entries(options.attributes)) {
-        element.setAttribute(key, value);
-      }
-    }
-
-    if (options.textContent) {
-      element.textContent = options.textContent;
-    }
-
-    if (options.innerHTML) {
-      element.innerHTML = options.innerHTML;
-    }
-
-    return element;
-  }
-
-  /**
-   * Remove todos os filhos de um elemento
-   * @param {HTMLElement} element - Elemento pai
-   */
-  static clearElement(element) {
-    if (element) {
-      while (element.firstChild) {
-        element.removeChild(element.firstChild);
-      }
+  if (attrs) {
+    for (const [key, value] of Object.entries(attrs)) {
+      node.setAttribute(key, value);
     }
   }
-
-  /**
-   * Adiciona classe com verificação de existência do elemento
-   * @param {HTMLElement|null} element - Elemento do DOM
-   * @param {string} className - Nome da classe
-   */
-  static safeAddClass(element, className) {
-    if (element && typeof element.classList !== 'undefined') {
-      element.classList.add(className);
-    }
+  if (children) {
+    node.append(.../** @type {Node[]} */ (children.filter(Boolean)));
   }
-
-  /**
-   * Remove classe com verificação de existência do elemento
-   * @param {HTMLElement|null} element - Elemento do DOM
-   * @param {string} className - Nome da classe
-   */
-  static safeRemoveClass(element, className) {
-    if (element && typeof element.classList !== 'undefined') {
-      element.classList.remove(className);
-    }
-  }
-
-  /**
-   * Verifica se um elemento tem uma classe específica
-   * @param {HTMLElement|null} element - Elemento do DOM
-   * @param {string} className - Nome da classe
-   * @returns {boolean} True se o elemento tem a classe
-   */
-  static hasClass(element, className) {
-    return element && element.classList && element.classList.contains(className);
-  }
-
-  /**
-   * Define atributo com verificação de existência do elemento
-   * @param {HTMLElement|null} element - Elemento do DOM
-   * @param {string} attribute - Nome do atributo
-   * @param {string} value - Valor do atributo
-   */
-  static safeSetAttribute(element, attribute, value) {
-    if (element && typeof element.setAttribute === 'function') {
-      element.setAttribute(attribute, value);
-    }
-  }
-
-  /**
-   * Define texto com verificação de existência do elemento
-   * @param {HTMLElement|null} element - Elemento do DOM
-   * @param {string} text - Texto a ser definido
-   */
-  static safeSetText(element, text) {
-    if (element) {
-      element.textContent = text;
-    }
-  }
-
-  /**
-   * Adiciona event listener com verificação de existência do elemento
-   * @param {HTMLElement|null} element - Elemento do DOM
-   * @param {string} event - Nome do evento
-   * @param {Function} handler - Função manipuladora do evento
-   * @param {Object} options - Opções do event listener
-   */
-  static safeAddEventListener(element, event, handler, options = {}) {
-    if (element && typeof element.addEventListener === 'function') {
-      element.addEventListener(event, handler, options);
-    }
-  }
-}
+  return node;
+};

@@ -1,87 +1,55 @@
-# Escalas-Tabajara 🧹
+# Escalas Tabajara
 
-> Sistema de escalas de limpeza e lavanderia da República Tabajara
+Página estática que organiza as escalas semanais de limpeza e da máquina de lavar de uma república estudantil. A rotação é calculada a partir de uma data de referência, e o dia atual fica destacado em ambas as escalas.
 
-## 📋 Sobre o Projeto
+## Funcionalidades
 
-Este projeto foi desenvolvido para solucionar um problema comum em repúblicas estudantis: a organização das tarefas domésticas. Como morador da República Tabajara, percebi que as escalas de limpeza e uso da máquina de lavar anotadas em planilhas geralmente não eram de fácil acesso ou não seguiam uma certa lógica.
+- Rotação circular automática a partir das listas de moradores — sem necessidade de editar a tabela manualmente.
+- Destaque do dia corrente nas duas escalas, atualizado quando a aba volta a receber foco.
+- Tema claro/escuro com persistência da preferência e fallback para `prefers-color-scheme`.
+- Layout responsivo, acessível (ARIA, navegação por teclado) e otimizado para impressão.
 
-Decidi transformar esse problema em uma oportunidade de aprendizado, criando uma aplicação web que:
+## Stack
 
-- Exibe de forma clara quem é responsável por cada ambiente em cada dia
-- Destaca automaticamente o dia atual
-- Mostra a escala semanal da máquina de lavar
-- Funciona bem em qualquer dispositivo
-- Oferece tema claro e escuro
+- JavaScript ES2022 modular, sem framework.
+- HTML5 e CSS3 com design tokens (variáveis CSS).
+- [Vite](https://vitejs.dev/) para build e servidor de desenvolvimento.
+- [Vitest](https://vitest.dev/) com jsdom para testes.
+- TypeScript em modo somente checagem (`tsc --noEmit`) sobre código JS anotado por JSDoc.
 
-## ✨ Funcionalidades
+## Estrutura
 
-- **Escala de Limpeza**: Exibição das tarefas de limpeza para segunda, quarta e Quinta e Sexta
-- **Rotação Automática**: Sistema inteligente que calcula a rotação das responsabilidades a cada semana
-- **Escala da Máquina de Lavar**: Tabela com os dias e horários reservados para cada morador
-- **Design Responsivo**: Funciona perfeitamente em desktops, tablets e celulares
-- **Modo Escuro**: Alternância entre tema claro e escuro conforme preferência do usuário
-- **Destaque do Dia Atual**: Identificação visual do dia atual em ambas as escalas
+```
+src/
+├── js/
+│   ├── app.js                          # bootstrap da aplicação
+│   ├── types.d.ts                      # tipos consumidos via JSDoc
+│   └── modules/
+│       ├── data.js                     # moradores, cômodos e tabela da máquina
+│       ├── dateUtils.js                # cálculos de semana e ciclos
+│       ├── domUtils.js                 # helpers de criação e localização de DOM
+│       ├── themeManager.js             # tema claro/escuro
+│       ├── scheduleRenderer.js         # render da escala de limpeza
+│       └── washingScheduleManager.js   # render da escala da máquina
+└── test/                               # testes Vitest
+```
 
-## 🖥️ Tecnologias Utilizadas
+## Desenvolvimento
 
-- JavaScript ES Modules
-- HTML5 e CSS3 com variáveis e design responsivo
-- Vite como bundler e servidor de desenvolvimento
-- Vitest para testes automatizados
-- Sistema modular de componentes
-- Date-fns para manipulação de datas
-- Persistência de preferências no localStorage
+```bash
+npm install
+npm run dev          # servidor em http://localhost:3000
+npm run build        # build de produção em dist/
+npm run preview      # serve o build de produção
+npm run test         # testes unitários
+npm run lint
+npm run type-check
+```
 
-## 🏛️ Arquitetura
+## Atualizando a escala
 
-O projeto segue uma estrutura modular, separando responsabilidades:
+Para alterar moradores, cômodos ou os dias da máquina de lavar, edite [`src/js/modules/data.js`](src/js/modules/data.js). A rotação semanal é regenerada automaticamente a partir das listas de moradores; a data de início do ciclo é controlada por `REFERENCE_DATE` no mesmo arquivo.
 
-- data.js: Contém os dados das escalas e configurações
-- dateUtils.js: Funções para manipulação de datas e cálculos de ciclos
-- domUtils.js: Utilitários para manipulação do DOM de forma segura
-- themeManager.js: Gerencia as preferências de tema
-- scheduleRenderer.js: Renderiza a escala de limpeza
-- washingScheduleManager.js: Gerencia a escala da máquina de lavar
-- app.js: Orquestra os diferentes componentes
+## Licença
 
-## 🚀 Como Usar
-
-1. Clone o repositório
-2. Instale as dependências: `npm install`
-3. Execute o servidor de desenvolvimento: `npm run dev`
-4. Para compilar para produção: `npm run build`
-
-## 🎯 Motivação Pessoal
-
-Este projeto nasceu de duas necessidades:
-
-1. **Prática**: Melhorar a organização na república onde moro, evitando conflitos sobre responsabilidades domésticas e uso da máquina de lavar.
-
-2. **Aprendizado**: Aprofundar meus conhecimentos em desenvolvimento web frontend, aplicando conceitos como:
-   - Arquitetura modular de JavaScript
-   - Manipulação eficiente do DOM
-   - Design responsivo
-   - Persistência de dados no navegador
-   - Práticas modernas de CSS (variáveis, temas)
-   - Testes automatizados
-   - Acessibilidade web
-
-## 📊 Aprendizados
-
-Durante o desenvolvimento deste projeto, adquiri experiência em:
-
-- Organização de código JavaScript modular
-- Manipulação de dados temporais (datas e ciclos)
-- Implementação de temas escuro/claro com CSS e JavaScript
-- Práticas de acessibilidade web
-- Testes unitários com Vitest
-- Otimização de performance em aplicações web
-
-## 📄 Licença
-
-Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
-
----
-
-Desenvolvido com 🧹 por Espalha Lixo
+MIT — ver [LICENSE](LICENSE).
