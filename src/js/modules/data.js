@@ -18,13 +18,13 @@ export const rooms = [
 
 /** @type {import('../types').WashingDay[]} */
 export const washingSchedule = [
-  { dayIndex: 0, day: 'Domingo', users: 'Espalha' },
+  { dayIndex: 0, day: 'Domingo', users: 'Espalha e I. Matheo' },
   { dayIndex: 1, day: 'Segunda-feira', users: 'Smigou e A. Gustavo' },
   { dayIndex: 2, day: 'Terça-feira', users: 'Navala e Gaga' },
   { dayIndex: 3, day: 'Quarta-feira', users: 'LATAM e B. Gugu' },
   { dayIndex: 4, day: 'Quinta-feira', users: 'Rita e I. Oliver' },
-  { dayIndex: 5, day: 'Sexta-feira', users: 'A. Viihtube' },
-  { dayIndex: 6, day: 'Sábado', users: 'PANOS' },
+  { dayIndex: 5, day: 'Sexta-feira', users: 'A. Viihtube e I. Corentin' },
+  { dayIndex: 6, day: 'Sábado', users: 'I. Steven e I. Baptiste' },
 ];
 
 // Segunda, 8 de dezembro de 2025 — origem do ciclo semanal.
