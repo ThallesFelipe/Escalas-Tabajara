@@ -1,4 +1,6 @@
-export type RoomKey = 'cozinha' | 'banhBaixo' | 'banhSuite' | 'sala' | 'lavabo';
+export type CommonRoomKey = 'cozinha' | 'banhBaixo' | 'banhSuite' | 'sala' | 'lavabo';
+
+export type RoomKey = CommonRoomKey | 'lavanderia';
 
 export interface Room {
   label: string;
@@ -6,7 +8,7 @@ export interface Room {
   icon: string;
 }
 
-export type Rotation = Record<RoomKey, string>;
+export type Rotation = Record<CommonRoomKey, string> & { lavanderia?: string };
 
 export interface ScheduleData {
   monTue: Rotation[];

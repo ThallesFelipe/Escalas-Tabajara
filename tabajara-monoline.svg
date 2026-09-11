@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="680" viewBox="95 8 420 430" fill="none">
+  <title>Tabajara — símbolo em outline monoline</title>
+  <desc>Releitura vetorial do símbolo original, sem lettering, em traços pretos finos de espessura uniforme, com pontas e junções arredondadas e fundo transparente.</desc>
+  <g stroke="#111111" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Curva externa do símbolo, simplificada em um único traço. -->
+    <path d="M 248,30 C 291,24 355,29 399,47 C 444,69 482,125 486,177 M 485,244 C 481,307 451,356 408,380 C 388,390 361,395 335,396"/>
+    <!-- Contorno principal, preservando a postura e as proporções da marca. -->
+    <path d="M 248,34 C 229,36 215,42 207,51 C 215,62 230,69 243,70 C 250,99 231,124 210,145 C 202,178 218,212 239,240 L 239,297 C 259,316 279,354 299,381 C 251,379 185,376 143,365 L 137,396 L 335,396 C 350,356 372,294 373,247 C 345,247 317,254 292,265 C 283,239 263,211 260,188 L 260,166 L 274,162 L 282,142 C 270,128 267,101 267,78 L 265,54 L 248,41 Z"/>
+    <!-- Detalhe isolado da cabeça. -->
+    <path d="M 140,53 L 170,57 L 173,72 L 166,81 Z"/>
+    <!-- Abertura da pata, sem preenchimento. -->
+    <path d="M 308,302 L 350,278 C 348,307 339,338 331,363 L 316,366 Z"/>
+    <!-- Base simplificada em uma linha. -->
+    <path d="M 115,404 H 417"/>
+  </g>
+</svg>

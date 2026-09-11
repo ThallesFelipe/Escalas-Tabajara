@@ -1,6 +1,7 @@
-import { rooms } from './data.js';
-import { formatDate } from './dateUtils.js';
+import { roomsByGroup } from './data.js';
+import { formatDate, startOfWeek } from './dateUtils.js';
 import { el } from './domUtils.js';
+import { icon } from './icons.js';
 
 /** @type {Record<number, string | undefined>} */
 const COLUMN_BY_WEEKDAY = {
@@ -23,28 +24,38 @@ export class ScheduleRenderer {
   render(cycle, scheduleData) {
     if (!this.container) return;
 
+    this.weekStart = cycle.monTueDate;
     this.container.replaceChildren(
       this.#column(
         'cleaning-mon-tue',
         'Segunda e Terça',
         scheduleData.monTue?.[cycle.monTueCycleIndex],
         cycle.monTueDate,
+        roomsByGroup.monTue
       ),
       this.#column(
         'cleaning-thu-fri',
         'Quinta e Sexta',
         scheduleData.thuFri?.[cycle.thuFriCycleIndex],
         cycle.thuFriDate,
-      ),
+        roomsByGroup.thuFri
+      )
     );
     this.highlightToday();
   }
 
   highlightToday() {
     if (!this.container) return;
-    const activeId = COLUMN_BY_WEEKDAY[new Date().getDay()];
+    const today = new Date();
+    const isCurrentWeek = this.weekStart?.getTime() === startOfWeek(today).getTime();
+    const activeId = isCurrentWeek ? COLUMN_BY_WEEKDAY[today.getDay()] : undefined;
     for (const column of this.container.querySelectorAll('.column')) {
-      column.classList.toggle('current-day', column.id === activeId);
+      const isToday = column.id === activeId;
+      column.classList.toggle('current-day', isToday);
+      if (isToday) column.setAttribute('aria-current', 'date');
+      else column.removeAttribute('aria-current');
+      const badge = column.querySelector('.today-badge');
+      badge?.toggleAttribute('hidden', !isToday);
     }
   }
 
@@ -53,8 +64,9 @@ export class ScheduleRenderer {
    * @param {string} label
    * @param {import('../types').Rotation | undefined} rotation
    * @param {Date} startDate
+   * @param {import('../types').Room[]} groupRooms
    */
-  #column(id, label, rotation, startDate) {
+  #column(id, label, rotation, startDate, groupRooms) {
     const headerId = `${id}-header`;
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 1);
@@ -63,12 +75,17 @@ export class ScheduleRenderer {
     const header = el('header', {
       className: 'column-header',
       children: [
-        el('h3', { id: headerId, className: 'day-title', text: label }),
-        el('span', {
-          className: 'date-display',
-          text: dateRange,
-          attrs: { 'aria-label': `Datas: ${dateRange}` },
+        el('div', {
+          children: [
+            el('h3', { id: headerId, className: 'day-title', text: label }),
+            el('span', {
+              className: 'date-display',
+              text: dateRange,
+              attrs: { 'aria-label': `Datas: ${dateRange}` },
+            }),
+          ],
         }),
+        el('span', { className: 'today-badge', text: 'HOJE', attrs: { hidden: '' } }),
       ],
     });
 
@@ -79,7 +96,7 @@ export class ScheduleRenderer {
             role: 'list',
             'aria-label': `Responsáveis pela limpeza de ${label}`,
           },
-          children: rooms.map((room) => this.#room(room, rotation)),
+          children: groupRooms.map(room => this.#room(room, rotation)),
         })
       : el('p', {
           className: 'empty-message',
@@ -111,8 +128,8 @@ export class ScheduleRenderer {
           className: 'room-info',
           children: [
             el('span', {
-              className: 'material-symbols-rounded room-icon',
-              text: room.icon,
+              className: 'room-icon',
+              children: [icon(room.icon)],
               attrs: { 'aria-hidden': 'true' },
             }),
             el('span', { className: 'room-name', text: room.label }),

@@ -3,18 +3,24 @@
  * lavar, basta editar os arrays abaixo — a rotação é regenerada automaticamente.
  */
 
-const monTueMembers = ['Rita', 'Navala', 'A. Gustavo', 'Smigou', 'I. Oliver'];
+const monTueMembers = ['Gaga', 'LATAM', 'B. Fábio', 'B. Sereno', 'A. Viihtube', 'Agregu'];
 
-const thuFriMembers = ['LATAM', 'Gaga', 'Espalha', 'B. Gugu', 'A. Viihtube'];
+const thuFriMembers = ['Espalha', 'Navala', 'Smigou', 'Rita', 'B. Gugu'];
 
 /** @type {import('../types').Room[]} */
-export const rooms = [
+const commonRooms = [
   { label: 'Cozinha', key: 'cozinha', icon: 'restaurant' },
   { label: 'Banheiro de baixo', key: 'banhBaixo', icon: 'shower' },
   { label: 'Banheiro suíte', key: 'banhSuite', icon: 'bathtub' },
   { label: 'Sala e corredor', key: 'sala', icon: 'weekend' },
   { label: 'Lavabo', key: 'lavabo', icon: 'wash' },
 ];
+
+/** @type {Record<keyof import('../types').ScheduleData, import('../types').Room[]>} */
+export const roomsByGroup = {
+  monTue: [...commonRooms, { label: 'Lavanderia', key: 'lavanderia', icon: 'washer' }],
+  thuFri: [...commonRooms],
+};
 
 /** @type {import('../types').WashingDay[]} */
 export const washingSchedule = [
@@ -27,28 +33,31 @@ export const washingSchedule = [
   { dayIndex: 6, day: 'Sábado', users: 'Smigou' },
 ];
 
-// Segunda, 8 de dezembro de 2025 — origem do ciclo semanal.
-export const REFERENCE_DATE = new Date(2025, 11, 8);
+// Segunda, 7 de setembro de 2026 — distribuição inicial dos dois grupos fixos.
+export const REFERENCE_DATE = new Date(2026, 8, 7);
 
 /**
- * Rotação circular: a cada semana, todo morador avança um cômodo. Quando há
- * menos moradores que cômodos, a sala assume também o lavabo.
+ * Rotação circular dentro do grupo: cada pessoa sobe uma tarefa por semana.
+ * Quem estava na primeira tarefa vai para a última, sem trocar de grupo.
  *
  * @param {string[]} members
+ * @param {import('../types').Room[]} groupRooms
  * @returns {import('../types').Rotation[]}
  */
-function buildRotations(members) {
+function buildRotations(members, groupRooms) {
+  if (members.length === 0 || members.length !== groupRooms.length) {
+    throw new Error('Cada grupo deve ter uma pessoa por tarefa.');
+  }
   return members.map((_member, week) => {
     const rotation = Object.fromEntries(
-      rooms.map((room, i) => [room.key, members[(i + week) % members.length]])
+      groupRooms.map((room, i) => [room.key, members[(i + week) % members.length]])
     );
-    if (members.length < rooms.length) rotation['lavabo'] = rotation['sala'];
     return /** @type {import('../types').Rotation} */ (rotation);
   });
 }
 
 /** @type {import('../types').ScheduleData} */
 export const scheduleData = {
-  monTue: buildRotations(monTueMembers),
-  thuFri: buildRotations(thuFriMembers),
+  monTue: buildRotations(monTueMembers, roomsByGroup.monTue),
+  thuFri: buildRotations(thuFriMembers, roomsByGroup.thuFri),
 };

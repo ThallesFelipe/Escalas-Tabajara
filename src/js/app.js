@@ -4,6 +4,8 @@ import { el, queryAppElements } from './modules/domUtils.js';
 import { ScheduleRenderer } from './modules/scheduleRenderer.js';
 import { ThemeManager } from './modules/themeManager.js';
 import { WashingScheduleManager } from './modules/washingScheduleManager.js';
+import { DashboardManager } from './modules/dashboardManager.js';
+import { hydrateIcons } from './modules/icons.js';
 
 /**
  * @param {HTMLElement | null} container
@@ -24,14 +26,11 @@ const renderError = (container, error) => {
       children: [
         el('h3', { text: 'Não foi possível carregar a escala' }),
         el('p', {
-          text:
-            error instanceof Error
-              ? error.message
-              : 'Ocorreu um erro inesperado.',
+          text: error instanceof Error ? error.message : 'Ocorreu um erro inesperado.',
         }),
         btn,
       ],
-    }),
+    })
   );
 };
 
@@ -42,32 +41,40 @@ const init = () => {
     return;
   }
 
+  hydrateIcons();
   new ThemeManager(dom);
   const cleaning = new ScheduleRenderer(dom);
   const washing = new WashingScheduleManager(dom);
 
   const refresh = () => {
     try {
-      const cycle = calculateWeekCycles(new Date(), REFERENCE_DATE, scheduleData);
+      const cycle = calculateWeekCycles(dashboard.date, REFERENCE_DATE, scheduleData);
       cleaning.render(cycle, scheduleData);
       washing.highlightToday();
+      dashboard.render();
     } catch (error) {
       console.error(error);
       renderError(dom.schedule, error);
     }
   };
 
+  const dashboard = new DashboardManager(refresh);
   washing.render();
   refresh();
-
-  if (dom.footerYear) {
-    dom.footerYear.textContent = String(new Date().getFullYear());
-  }
 
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') refresh();
   });
   window.addEventListener('focus', refresh);
+  // Keep an open tab accurate when the day changes, without rebuilding it every minute.
+  let lastDate = new Date().toDateString();
+  window.setInterval(() => {
+    const date = new Date().toDateString();
+    if (date !== lastDate) {
+      lastDate = date;
+      refresh();
+    }
+  }, 60_000);
 };
 
 if (document.readyState === 'loading') {

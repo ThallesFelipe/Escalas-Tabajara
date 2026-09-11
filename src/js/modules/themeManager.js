@@ -1,7 +1,9 @@
+import { icon } from './icons.js';
+
 const STORAGE_KEY = 'escalas-tabajara-theme';
 const DARK_CLASS = 'dark-mode';
 
-const ICON = { light: 'light_mode', dark: 'dark_mode' };
+const ICON = { light: 'moon', dark: 'sun' };
 const LABEL = {
   light: 'Alternar para modo escuro',
   dark: 'Alternar para modo claro',
@@ -16,11 +18,10 @@ const readStoredTheme = () => {
 };
 
 /** @param {string} value */
-const writeStoredTheme = (value) => {
+const writeStoredTheme = value => {
   try {
     localStorage.setItem(STORAGE_KEY, value);
-  } catch {
-  }
+  } catch {}
 };
 
 export class ThemeManager {
@@ -33,7 +34,7 @@ export class ThemeManager {
 
     this.#apply();
     this.toggle?.addEventListener('click', () => this.#flip());
-    this.media.addEventListener('change', (event) => {
+    this.media.addEventListener('change', event => {
       if (readStoredTheme() === null) {
         this.isDark = event.matches;
         this.#apply();
@@ -55,9 +56,10 @@ export class ThemeManager {
 
   #apply() {
     const mode = this.isDark ? 'dark' : 'light';
-    document.body.classList.toggle(DARK_CLASS, this.isDark);
-    if (this.icon) this.icon.textContent = ICON[mode];
+    document.documentElement.classList.toggle(DARK_CLASS, this.isDark);
+    if (this.icon) this.icon.replaceChildren(icon(ICON[mode]));
     this.toggle?.setAttribute('aria-label', LABEL[mode]);
+    this.toggle?.setAttribute('title', LABEL[mode]);
     this.toggle?.setAttribute('aria-pressed', String(this.isDark));
   }
 }

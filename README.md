@@ -5,9 +5,12 @@ Página estática que organiza as escalas semanais de limpeza e da máquina de l
 ## Funcionalidades
 
 - Rotação circular automática a partir das listas de moradores — sem necessidade de editar a tabela manualmente.
-- Destaque do dia corrente nas duas escalas, atualizado quando a aba volta a receber foco.
+- Navegação entre semanas com retorno à semana atual e limite na data de início da escala.
+- Resumo do dia com os responsáveis pela lavanderia e indicação de dia de limpeza.
+- Destaque do dia corrente nas duas escalas, atualizado ao voltar à aba e na mudança de dia. Semanas consultadas fora da atual não recebem o destaque de hoje.
 - Tema claro/escuro com persistência da preferência e fallback para `prefers-color-scheme`.
 - Layout responsivo, acessível (ARIA, navegação por teclado) e otimizado para impressão.
+- Identidade em coral, latte e café, ícones SVG locais e transições que respeitam movimento reduzido.
 
 ## Stack
 
@@ -27,7 +30,9 @@ src/
 │   └── modules/
 │       ├── data.js                     # moradores, cômodos e tabela da máquina
 │       ├── dateUtils.js                # cálculos de semana e ciclos
+│       ├── dashboardManager.js         # navegação semanal e resumo de hoje
 │       ├── domUtils.js                 # helpers de criação e localização de DOM
+│       ├── icons.js                    # ícones SVG locais
 │       ├── themeManager.js             # tema claro/escuro
 │       ├── scheduleRenderer.js         # render da escala de limpeza
 │       └── washingScheduleManager.js   # render da escala da máquina
@@ -49,6 +54,10 @@ npm run type-check
 ## Atualizando a escala
 
 Para alterar moradores, cômodos ou os dias da máquina de lavar, edite [`src/js/modules/data.js`](src/js/modules/data.js). A rotação semanal é regenerada automaticamente a partir das listas de moradores; a data de início do ciclo é controlada por `REFERENCE_DATE` no mesmo arquivo.
+
+A semana inicial é **07/09/2026**. Os grupos são fixos: segunda/terça tem seis pessoas e seis tarefas (incluindo a limpeza da Lavanderia), e quinta/sexta tem cinco pessoas e cinco tarefas. As listas de tarefas ficam em `roomsByGroup`, e os dois grupos usam o mesmo gerador de rotações.
+
+A cada semana, cada pessoa sobe uma tarefa na ordem da lista; quem estava na Cozinha passa para a última tarefa do seu próprio grupo. O ciclo de segunda/terça se repete após seis semanas, e o de quinta/sexta após cinco. A escala de uso da máquina de lavar é independente e permanece inalterada.
 
 ## Licença
 

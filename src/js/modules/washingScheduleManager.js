@@ -14,11 +14,22 @@ export class WashingScheduleManager {
         el('tr', {
           attrs: { 'data-day-index': String(dayIndex) },
           children: [
-            el('td', { text: day }),
+            el('th', {
+              attrs: { scope: 'row' },
+              children: [
+                el('span', {
+                  className: 'washing-day',
+                  children: [
+                    el('span', { text: day.replace('-feira', '') }),
+                    el('span', { className: 'today-badge', text: 'HOJE', attrs: { hidden: '' } }),
+                  ],
+                }),
+              ],
+            }),
             el('td', { text: users }),
           ],
-        }),
-      ),
+        })
+      )
     );
     this.highlightToday();
   }
@@ -29,6 +40,7 @@ export class WashingScheduleManager {
     for (const row of this.tbody.querySelectorAll('tr')) {
       const isToday = Number(row.dataset.dayIndex) === todayIndex;
       row.classList.toggle('current-day', isToday);
+      row.querySelector('.today-badge')?.toggleAttribute('hidden', !isToday);
       if (isToday) row.setAttribute('aria-current', 'date');
       else row.removeAttribute('aria-current');
     }
