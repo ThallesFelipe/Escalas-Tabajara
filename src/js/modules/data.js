@@ -24,7 +24,7 @@ export const roomsByGroup = {
 
 /** @type {import('../types').WashingDay[]} */
 export const washingSchedule = [
-  { dayIndex: 0, day: 'Domingo', users: 'Franceses' },
+  { dayIndex: 0, day: 'Domingo', users: 'Panos' },
   { dayIndex: 1, day: 'Segunda-feira', users: 'Gaga e A. Viihtube' },
   { dayIndex: 2, day: 'Terça-feira', users: 'LATAM e B. Çerenu' },
   { dayIndex: 3, day: 'Quarta-feira', users: 'Navala e Rita' },

@@ -139,7 +139,7 @@ describe('grupos fixos de limpeza', () => {
 
   it('preserva integralmente a escala independente da máquina de lavar', () => {
     expect(washingSchedule).toEqual([
-      { dayIndex: 0, day: 'Domingo', users: 'Franceses' },
+      { dayIndex: 0, day: 'Domingo', users: 'Panos' },
       { dayIndex: 1, day: 'Segunda-feira', users: 'Gaga e A. Viihtube' },
       { dayIndex: 2, day: 'Terça-feira', users: 'LATAM e B. Çerenu' },
       { dayIndex: 3, day: 'Quarta-feira', users: 'Navala e Rita' },
