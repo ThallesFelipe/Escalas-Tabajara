@@ -58,10 +58,10 @@ const mountDashboard = () => {
 describe('dashboard semanal', () => {
   it('mostra os responsáveis reais e o destaque textual de hoje', () => {
     mountDashboard();
-    expect(document.querySelectorAll('.room')).toHaveLength(11);
-    expect(element('cleaning-mon-tue').querySelectorAll('.room')).toHaveLength(6);
+    expect(document.querySelectorAll('.room')).toHaveLength(10);
+    expect(element('cleaning-mon-tue').querySelectorAll('.room')).toHaveLength(5);
     expect(element('cleaning-thu-fri').querySelectorAll('.room')).toHaveLength(5);
-    expect(element('cleaning-mon-tue').textContent).toContain('Lavanderia');
+    expect(element('cleaning-mon-tue').textContent).not.toContain('Lavanderia');
     expect(element('cleaning-thu-fri').textContent).not.toContain('Lavanderia');
     expect(document.querySelectorAll('#washingTableBody tr')).toHaveLength(7);
     expect(element('todayWashing').textContent).toBe('Espalha e B. Gugu');
@@ -93,32 +93,30 @@ describe('dashboard semanal', () => {
         room.querySelector('.responsible')?.textContent,
       ]);
     expect(assignments('cleaning-mon-tue')).toEqual([
-      ['Cozinha', 'Gaga'],
-      ['Banheiro de baixo', 'LATAM'],
-      ['Banheiro suíte', 'B. Fábio'],
-      ['Sala e corredor', 'B. Sereno'],
-      ['Lavabo', 'A. Viihtube'],
-      ['Lavanderia', 'Agregu'],
+      ['Cozinha', 'A. Viihtube'],
+      ['Banheiro de baixo', 'Gaga'],
+      ['Banheiro suíte', 'LATAM'],
+      ['Sala e corredor', 'B. Fábio'],
+      ['Lavabo', 'B. Sereno'],
     ]);
     expect(assignments('cleaning-thu-fri')).toEqual([
       ['Cozinha', 'Espalha'],
       ['Banheiro de baixo', 'Navala'],
-      ['Banheiro suíte', 'Smigou'],
+      ['Banheiro suíte', 'Agregu'],
       ['Sala e corredor', 'Rita'],
       ['Lavabo', 'B. Gugu'],
     ]);
     element('nextWeek').click();
     expect(assignments('cleaning-mon-tue')).toEqual([
-      ['Cozinha', 'LATAM'],
-      ['Banheiro de baixo', 'B. Fábio'],
-      ['Banheiro suíte', 'B. Sereno'],
-      ['Sala e corredor', 'A. Viihtube'],
-      ['Lavabo', 'Agregu'],
-      ['Lavanderia', 'Gaga'],
+      ['Cozinha', 'Gaga'],
+      ['Banheiro de baixo', 'LATAM'],
+      ['Banheiro suíte', 'B. Fábio'],
+      ['Sala e corredor', 'B. Sereno'],
+      ['Lavabo', 'A. Viihtube'],
     ]);
     expect(assignments('cleaning-thu-fri')).toEqual([
       ['Cozinha', 'Navala'],
-      ['Banheiro de baixo', 'Smigou'],
+      ['Banheiro de baixo', 'Agregu'],
       ['Banheiro suíte', 'Rita'],
       ['Sala e corredor', 'B. Gugu'],
       ['Lavabo', 'Espalha'],
@@ -156,7 +154,7 @@ describe('dashboard semanal', () => {
     vi.setSystemTime(new Date(2026, 8, 12, 12));
     refresh();
     expect(element('weekRange').textContent).toBe(range);
-    expect(element('todayWashing').textContent).toBe('Smigou');
+    expect(element('todayWashing').textContent).toBe('Livre');
     expect(element('todayCleaning').textContent).toContain('Sem rodada');
   });
 
@@ -180,7 +178,7 @@ describe('dashboard semanal', () => {
     expect(element('weekRange').textContent).toContain('2027');
     element('nextWeek').click();
     expect(element('weekRange').textContent).toContain('2027');
-    expect(document.querySelectorAll('.room')).toHaveLength(11);
+    expect(document.querySelectorAll('.room')).toHaveLength(10);
   });
 
   it('troca a semana sem animação quando movimento reduzido está ativo', () => {

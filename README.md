@@ -55,9 +55,9 @@ npm run type-check
 
 Para alterar moradores, cômodos ou os dias da máquina de lavar, edite [`src/js/modules/data.js`](src/js/modules/data.js). A rotação semanal é regenerada automaticamente a partir das listas de moradores; a data de início do ciclo é controlada por `REFERENCE_DATE` no mesmo arquivo.
 
-A semana inicial é **07/09/2026**. Os grupos são fixos: segunda/terça tem seis pessoas e seis tarefas (incluindo a limpeza da Lavanderia), e quinta/sexta tem cinco pessoas e cinco tarefas. As listas de tarefas ficam em `roomsByGroup`, e os dois grupos usam o mesmo gerador de rotações.
+A semana inicial é **07/09/2026**. Os grupos são fixos: segunda/terça e quinta/sexta têm cinco pessoas e cinco tarefas, sem a limpeza da Lavanderia. As listas de tarefas ficam em `roomsByGroup`, e os dois grupos usam o mesmo gerador de rotações. A lista de segunda/terça foi alinhada para preservar a rotação da semana de **02/11/2026**, retirando Agregu e compactando os demais responsáveis; Agregu substitui Smigou na quinta/sexta.
 
-A cada semana, cada pessoa sobe uma tarefa na ordem da lista; quem estava na Cozinha passa para a última tarefa do seu próprio grupo. O ciclo de segunda/terça se repete após seis semanas, e o de quinta/sexta após cinco. A escala de uso da máquina de lavar é independente e permanece inalterada.
+A cada semana, cada pessoa sobe uma tarefa na ordem da lista; quem estava na Cozinha passa para a última tarefa do seu próprio grupo. Ambos os ciclos se repetem após cinco semanas. A escala de uso da máquina de lavar é independente; o sábado fica livre, e os demais dias permanecem inalterados.
 
 ## Licença
 

@@ -3,17 +3,16 @@ import { REFERENCE_DATE, roomsByGroup, scheduleData, washingSchedule } from '../
 import { calculateWeekCycles } from '../js/modules/dateUtils.js';
 
 const initialMonTue = {
-  cozinha: 'Gaga',
-  banhBaixo: 'LATAM',
-  banhSuite: 'B. Fábio',
-  sala: 'B. Sereno',
-  lavabo: 'A. Viihtube',
-  lavanderia: 'Agregu',
+  cozinha: 'A. Viihtube',
+  banhBaixo: 'Gaga',
+  banhSuite: 'LATAM',
+  sala: 'B. Fábio',
+  lavabo: 'B. Sereno',
 };
 const initialThuFri = {
   cozinha: 'Espalha',
   banhBaixo: 'Navala',
-  banhSuite: 'Smigou',
+  banhSuite: 'Agregu',
   sala: 'Rita',
   lavabo: 'B. Gugu',
 };
@@ -29,6 +28,39 @@ const rotationsAt = week => {
 };
 
 describe('grupos fixos de limpeza', () => {
+  it('preserva a distribuição reorganizada de 02/11 e 05/11 e a continuidade seguinte', () => {
+    const current = {
+      monTue: {
+        cozinha: 'B. Fábio', banhBaixo: 'B. Sereno', banhSuite: 'A. Viihtube',
+        sala: 'Gaga', lavabo: 'LATAM',
+      },
+      thuFri: {
+        cozinha: 'Rita', banhBaixo: 'B. Gugu', banhSuite: 'Espalha',
+        sala: 'Navala', lavabo: 'Agregu',
+      },
+    };
+    for (const day of [2, 5]) {
+      const cycle = calculateWeekCycles(new Date(2026, 10, day, 12), REFERENCE_DATE, scheduleData);
+      expect(cycle.monTueDate).toEqual(new Date(2026, 10, 2));
+      expect(cycle.thuFriDate).toEqual(new Date(2026, 10, 5));
+      expect({
+        monTue: scheduleData.monTue[cycle.monTueCycleIndex],
+        thuFri: scheduleData.thuFri[cycle.thuFriCycleIndex],
+      }).toEqual(current);
+    }
+    expect(rotationsAt(9)).toEqual({
+      monTue: {
+        cozinha: 'B. Sereno', banhBaixo: 'A. Viihtube', banhSuite: 'Gaga',
+        sala: 'LATAM', lavabo: 'B. Fábio',
+      },
+      thuFri: {
+        cozinha: 'B. Gugu', banhBaixo: 'Espalha', banhSuite: 'Navala',
+        sala: 'Agregu', lavabo: 'Rita',
+      },
+    });
+    expect(JSON.stringify({ scheduleData, washingSchedule })).not.toContain('Smigou');
+  });
+
   it('começa em 07/09/2026 com as duas distribuições solicitadas', () => {
     expect(REFERENCE_DATE).toEqual(new Date(2026, 8, 7));
     expect(rotationsAt(0)).toEqual({ monTue: initialMonTue, thuFri: initialThuFri });
@@ -38,7 +70,6 @@ describe('grupos fixos de limpeza', () => {
       'Banheiro suíte',
       'Sala e corredor',
       'Lavabo',
-      'Lavanderia',
     ]);
     expect(roomsByGroup.thuFri.map(room => room.label)).toEqual([
       'Cozinha',
@@ -52,16 +83,15 @@ describe('grupos fixos de limpeza', () => {
   it('faz cada pessoa subir uma tarefa em 14/09, levando a primeira para a última', () => {
     expect(rotationsAt(1)).toEqual({
       monTue: {
-        cozinha: 'LATAM',
-        banhBaixo: 'B. Fábio',
-        banhSuite: 'B. Sereno',
-        sala: 'A. Viihtube',
-        lavabo: 'Agregu',
-        lavanderia: 'Gaga',
+        cozinha: 'Gaga',
+        banhBaixo: 'LATAM',
+        banhSuite: 'B. Fábio',
+        sala: 'B. Sereno',
+        lavabo: 'A. Viihtube',
       },
       thuFri: {
         cozinha: 'Navala',
-        banhBaixo: 'Smigou',
+        banhBaixo: 'Agregu',
         banhSuite: 'Rita',
         sala: 'B. Gugu',
         lavabo: 'Espalha',
@@ -69,23 +99,23 @@ describe('grupos fixos de limpeza', () => {
     });
   });
 
-  it('fecha os ciclos independentes em seis e cinco semanas, sem repetições antecipadas', () => {
-    expect(scheduleData.monTue).toHaveLength(6);
+  it('fecha ambos os ciclos em cinco semanas, sem repetições antecipadas', () => {
+    expect(scheduleData.monTue).toHaveLength(5);
     expect(scheduleData.thuFri).toHaveLength(5);
-    for (let week = 1; week < 6; week++) {
+    for (let week = 1; week < 5; week++) {
       expect(rotationsAt(week).monTue).not.toEqual(initialMonTue);
     }
     for (let week = 1; week < 5; week++) {
       expect(rotationsAt(week).thuFri).not.toEqual(initialThuFri);
     }
     expect(rotationsAt(5).thuFri).toEqual(initialThuFri);
-    expect(rotationsAt(6).monTue).toEqual(initialMonTue);
+    expect(rotationsAt(5).monTue).toEqual(initialMonTue);
     expect(rotationsAt(6).thuFri).toEqual(rotationsAt(1).thuFri);
     expect(rotationsAt(30)).toEqual(rotationsAt(0));
   });
 
   it.each([
-    { group: /** @type {const} */ ('monTue'), initial: initialMonTue, length: 6 },
+    { group: /** @type {const} */ ('monTue'), initial: initialMonTue, length: 5 },
     { group: /** @type {const} */ ('thuFri'), initial: initialThuFri, length: 5 },
   ])(
     'mantém pessoas e tarefas de $group durante 30 semanas, incluindo a virada do ano',
@@ -97,7 +127,8 @@ describe('grupos fixos de limpeza', () => {
         expect(Object.keys(rotation)).toEqual(keys);
         expect(Object.values(rotation).sort()).toEqual(members);
         expect(new Set(Object.values(rotation)).size).toBe(length);
-        if (group === 'thuFri') expect(rotation).not.toHaveProperty('lavanderia');
+        expect(rotation).not.toHaveProperty('lavanderia');
+        expect(Object.values(rotation)).not.toContain('Smigou');
 
         // Check each person's movement relative to the previous week, including wraparound.
         if (week > 0) {
@@ -137,7 +168,7 @@ describe('grupos fixos de limpeza', () => {
     expect(next.thuFriCycleIndex).toBe(1);
   });
 
-  it('preserva integralmente a escala independente da máquina de lavar', () => {
+  it('libera sábado e preserva os demais dias da máquina de lavar', () => {
     expect(washingSchedule).toEqual([
       { dayIndex: 0, day: 'Domingo', users: 'Panos' },
       { dayIndex: 1, day: 'Segunda-feira', users: 'Gaga e A. Viihtube' },
@@ -145,7 +176,7 @@ describe('grupos fixos de limpeza', () => {
       { dayIndex: 3, day: 'Quarta-feira', users: 'Navala e Rita' },
       { dayIndex: 4, day: 'Quinta-feira', users: 'B. Fábio e Agregu' },
       { dayIndex: 5, day: 'Sexta-feira', users: 'Espalha e B. Gugu' },
-      { dayIndex: 6, day: 'Sábado', users: 'Smigou' },
+      { dayIndex: 6, day: 'Sábado', users: 'Livre' },
     ]);
   });
 });
